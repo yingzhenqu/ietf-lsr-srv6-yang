@@ -75,6 +75,7 @@ module ietf-isis-srv6 {
      described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
      they appear in all capitals, as shown here.";
 
+
   revision 2022-09-18 {
     description
         "Initial revision.";
@@ -161,7 +162,7 @@ module ietf-isis-srv6 {
      "Enhance SRv6 FRR with ti-lfa
      support";
   }
-  
+
   /* Groupings */
   grouping srv6-msds {
     description
