@@ -76,7 +76,7 @@ module ietf-isis-srv6 {
      they appear in all capitals, as shown here.";
 
 
-  revision 2022-09-18 {
+  revision 2022-09-25 {
     description
         "Initial revision.";
     reference 
@@ -318,7 +318,7 @@ module ietf-isis-srv6 {
         bit d-flag {
           position 0;
           description
-            "When the locator is leaked from level-2 to leve-1,
+            "When the locator is leaked from level-2 to level-1,
              the d-flag must be set.";
         }
       }

@@ -1,5 +1,10 @@
-<?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE rfc [
+  <!ENTITY nbsp    "&#160;">
+  <!ENTITY zwsp   "&#8203;">
+  <!ENTITY nbhy   "&#8209;">
+  <!ENTITY wj     "&#8288;">
+]>
 <?rfc toc="yes"?>
 <?rfc tocompact="yes"?>
 <?rfc tocdepth="3"?>
@@ -10,157 +15,113 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc category="std" docName="draft-ietf-lsr-isis-srv6-yang-01"
-     ipr="trust200902">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" docName="draft-ietf-lsr-isis-srv6-yang-02" ipr="trust200902" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" tocDepth="3" symRefs="true" sortRefs="true" version="3">
+  <!-- xml2rfc v2v3 conversion 3.13.1 -->
   <front>
     <title abbrev="YANG Data Model for IS-IS SRv6">YANG Data Model for IS-IS
     SRv6</title>
-
+    <seriesInfo name="Internet-Draft" value="draft-ietf-lsr-isis-srv6-yang-02"/>
     <author fullname="Zhibo Hu" initials="Z" surname="Hu">
       <organization>Huawei</organization>
-
       <address>
         <postal>
           <street>Huawei Bld., No.156 Beiqing Rd.</street>
-
           <city>Beijing</city>
-
           <code>100095</code>
-
           <country>China</country>
         </postal>
-
         <email>huzhibo@huawei.com</email>
       </address>
     </author>
-
     <author fullname="Dan Ye" initials="D" surname="Ye">
       <organization>Cisco</organization>
-
       <address>
         <postal>
           <street>170 W. Tasman Dr. San Jose,</street>
-
           <city>California</city>
-
           <code>95134</code>
-
           <country>USA</country>
         </postal>
-
         <email>daye@cisco.com</email>
       </address>
     </author>
-
     <author fullname="Yingzhen Qu" initials="Y" surname="Qu">
       <organization>Futurewei Technologies</organization>
-
       <address>
         <postal>
           <street>2330 Central Express Way</street>
-
           <city>Santa Clara</city>
-
           <code>950950</code>
-
           <country>USA</country>
         </postal>
-
         <email>yingzhen.qu@futurewei.com</email>
       </address>
     </author>
-
     <author fullname="Xuesong Geng" initials="X" surname="Geng">
       <organization>Huawei</organization>
-
       <address>
         <postal>
           <street>Huawei Bld., No.156 Beiqing Rd.</street>
-
           <city>Beijing</city>
-
           <code>100095</code>
-
           <country>China</country>
         </postal>
-
         <email>gengxuesong@huawei.com</email>
       </address>
     </author>
-
     <author fullname="Qiufang Ma" initials="Q." surname="Ma">
       <organization>Huawei</organization>
-
       <address>
         <postal>
           <street>101 Software Avenue, Yuhua District</street>
-
           <city>Nanjing</city>
-
           <region>Jiangsu</region>
-
           <code>210012</code>
-
           <country>China</country>
         </postal>
-
         <email>maqiufang1@huawei.com</email>
       </address>
     </author>
-
     <date/>
-
     <abstract>
       <t>This document defines a YANG data model that can be used to configure
-      and manage IS-IS SRv6 <xref target="I-D.ietf-lsr-isis-srv6-extensions">
-      </xref>.</t>
+      and manage IS-IS SRv6 <xref target="I-D.ietf-lsr-isis-srv6-extensions" format="default">
+        </xref>.</t>
     </abstract>
-
-    <note title="Requirements Language">
+    <note>
+      <name>Requirements Language</name>
       <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
       "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-      document are to be interpreted as described in <xref
-      target="RFC2119">RFC 2119</xref>.</t>
+      document are to be interpreted as described in <xref target="RFC2119" format="default">RFC 2119</xref>.</t>
     </note>
   </front>
-
   <middle>
-    <section title="Overview">
-      <t>YANG<xref target="RFC6020"> </xref><xref target="RFC7950"> </xref> is
+    <section numbered="true" toc="default">
+      <name>Overview</name>
+      <t>YANG<xref target="RFC7950" format="default"> </xref> is
       a data definition language used to define the contents of a conceptual
       data store that allows networked devices to be managed using
-      NETCONF<xref target="RFC6241"> </xref>. YANG is proving relevant beyond
+      NETCONF<xref target="RFC6241" format="default"> </xref>. YANG is proving relevant beyond
       its initial confines, as bindings to other interfaces (e.g., REST) and
       encodings other than XML (e.g., JSON) are being defined. Furthermore,
       YANG data models can be used as the basis for implementation of other
       interfaces, such as CLI and programmatic APIs.</t>
-
       <t>This document defines a YANG data model that can be used to configure
-      and manage IS-IS SRv6 and it is an augmentation to the IS-IS YANG data
-      model.</t>
+      and manage IS-IS Segment Routing over IPv6 Dataplane, and it is an
+      augmentation to the IS-IS YANG data model.</t>
     </section>
-
-    <section title="IS-IS SRv6">
+    <section numbered="true" toc="default">
+      <name>IS-IS SRv6</name>
       <t>This document defines a model for IS-IS SRv6 feature. It is an
       augmentation of the IS-IS base model.</t>
-
       <t>The IS-IS SRv6 YANG module requires support for the base srv6
-      module<xref target="I-D.ietf-spring-srv6-yang"/>, which defines the
+      module<xref target="I-D.ietf-spring-srv6-yang" format="default"/>, which defines the
       global srv6 configuration independent of any specific routing protocol
-      configuration, and support of IS-IS base model <xref
-      target="I-D.ietf-isis-yang-isis-cfg"/> which defines basic IS-IS
-      configuration and state. This module uses types defined in <xref
-      target="RFC6991"/>. It also references <xref target="RFC8349"/>, <xref
-      target="I-D.ietf-spring-srv6-yang"/>, <xref
-      target="I-D.ietf-isis-yang-isis-cfg"/>, <xref
-      target="I-D.ietf-spring-sr-yang"/> and <xref
-      target="I-D.ietf-spring-srv6-yang"/>.</t>
-
+      configuration, and support of IS-IS base model <xref target="I-D.ietf-isis-yang-isis-cfg" format="default"/> which defines basic IS-IS
+      configuration and state. This module uses types defined in <xref target="RFC6991" format="default"/>. It also references <xref target="RFC8349" format="default"/>, and <xref target="I-D.ietf-spring-sr-yang" format="default"/>.</t>
       <t>The figure below describes the overall structure of the isis-srv6
       YANG module:</t>
-
-      <t><figure>
-          <artwork align="left"><![CDATA[module: ietf-isis-srv6
+      <artwork align="left" name="" type="" alt=""><![CDATA[module: ietf-isis-srv6
   augment /rt:routing/rt:control-plane-protocols
           /rt:control-plane-protocol/isis:isis:
     +--rw srv6-cfg
@@ -267,40 +228,39 @@
           +--ro endpoint-func?             identityref
           +--ro undefined-endpoint-func?   uint16
 ]]></artwork>
-        </figure></t>
     </section>
-
-    <section title="IS-IS SRv6 configuration">
-      <section title="SRv6 activation">
+    <section numbered="true" toc="default">
+      <name>IS-IS SRv6 configuration</name>
+      <section numbered="true" toc="default">
+        <name>SRv6 activation</name>
         <t>Activation of IS-IS SRv6 is done by setting the "enable" leaf to
         true. This triggers advertisement of SRv6 extensions based on the
         configuration parameters that have been setup using the base SRv6
         module.</t>
       </section>
-
-      <section title="Locator setting">
+      <section numbered="true" toc="default">
+        <name>Locator setting</name>
         <t>The basic SRv6 module defines the related locator leafs. When the
         IS-IS SRv6 module is enabled, set the locator by using the following
         strategy: firstly, it is reasonable to check whether the default
         locator is used, if not, to use the specified locator. The strategy is
         realized by adding the leaf "default-locator", "locator-name" .</t>
       </section>
-
-      <section title="IP Fast reroute">
+      <section numbered="true" toc="default">
+        <name>IP Fast reroute</name>
         <t>IS-IS SRv6 model augments the fast-reroute container. It brings the
         ability to activate ipv6 TI-LFA (topology independent LFA).</t>
       </section>
-
-      <section title="Microloop avoidance">
+      <section numbered="true" toc="default">
+        <name>Microloop avoidance</name>
         <t>IS-IS SRv6 model augments the micro-loop-avoidance container, this
         container including the leaf "srv6-enable" brings the ability to
         activate SRv6 avoid-microloop.</t>
       </section>
     </section>
-
-    <section title="IS-IS SRv6 YANG Module">
-      <figure>
-        <artwork><![CDATA[<CODE BEGINS> file "ietf-isis-srv6@2022-03-26.yang"
+    <section numbered="true" toc="default">
+      <name>IS-IS SRv6 YANG Module</name>
+      <sourcecode name="ietf-isis-srv6@2022-09-25.yang" type="yang" markers="true"><![CDATA[
 module ietf-isis-srv6 {
   yang-version 1.1;
   namespace "urn:ietf:params:xml:ns:"
@@ -363,10 +323,10 @@ module ietf-isis-srv6 {
 
      Redistribution and use in source and binary forms, with or
      without modification, is permitted pursuant to, and subject
-     to the license terms contained in, the Simplified BSD License
+     to the license terms contained in, the Revised BSD License
      set forth in Section 4.c of the IETF Trust's Legal Provisions
      Relating to IETF Documents
-     (http://trustee.ietf.org/license-info).
+     (https://trustee.ietf.org/license-info).
 
      This version of this YANG module is part of RFC XXXX
      (https://www.rfc-editor.org/info/rfcXXXX); see the RFC itself
@@ -378,10 +338,12 @@ module ietf-isis-srv6 {
      described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
      they appear in all capitals, as shown here.";
 
-  revision 2022-03-26 {
+
+  revision 2022-09-25 {
     description
         "Initial revision.";
-    reference "draft-ietf-lsr-isis-srv6-extensions-08";
+    reference 
+      "RFC XXXX: YANG Data Model for IS-IS SRv6";
   }
 
   /* Identities */
@@ -463,6 +425,7 @@ module ietf-isis-srv6 {
      "Enhance SRv6 FRR with ti-lfa
      support";
   }
+
   /* Groupings */
   grouping srv6-msds {
     description
@@ -618,7 +581,7 @@ module ietf-isis-srv6 {
         bit d-flag {
           position 0;
           description
-            "When the locator is leaked from level-2 to leve-1,
+            "When the locator is leaked from level-2 to level-1,
              the d-flag must be set.";
         }
       }
@@ -724,7 +687,6 @@ module ietf-isis-srv6 {
          associated with the SID value. This is only
          used on LAN adjacencies.";
     }
-
     // sub-sub-tlvs
     uses srv6-sid-structures;
   }
@@ -869,7 +831,6 @@ module ietf-isis-srv6 {
         "SRv6 TILFA configuration.";
     }
   }
-
   /* Operational states */
   augment "/rt:routing/" +
         "rt:control-plane-protocols/rt:control-plane-protocol"+
@@ -969,91 +930,356 @@ module ietf-isis-srv6 {
   }
   /* Notifications */
 }
-<CODE ENDS>]]></artwork>
-      </figure>
+]]></sourcecode>
     </section>
-
-    <section anchor="Security" title="Security Considerations">
-      <t>Configuration and state data defined in this document are designed to
-      be accessed via the NETCONF protocol <xref target="RFC6241"/>.</t>
-
-      <t>As IS-IS is an IGP protocol (critical piece of the network), ensuring
-      stability and security of the protocol is mandatory for the network
-      service.</t>
-
-      <t>Authors recommends to implement NETCONF access control model (<xref
-      target="RFC6536"/>) to restrict access to all or part of the
-      configuration to specific users.</t>
+    <section anchor="Security" numbered="true" toc="default">
+      <name>Security Considerations</name>
+      <t>The YANG modules specified in this document define a schema for
+       data that is designed to be accessed via network
+       management protocols such as NETCONF <xref target="RFC6241" format="default"/> or
+       RESTCONF <xref target="RFC8040" format="default"/>. The lowest NETCONF layer is the secure transport
+       layer, and the mandatory-to-implement secure transport is Secure Shell (SSH)
+       <xref target="RFC6242" format="default"/>. The lowest RESTCONF layer is HTTPS, and the
+       mandatory-to-implement secure transport is TLS <xref target="RFC8446" format="default"/>.</t>
+      <t>The Network Configuration Access Control Model (NACM) <xref target="RFC8341" format="default"/> provides the
+      means to restrict access for particular NETCONF or RESTCONF users to a
+      pre-configured subset of all available NETCONF or RESTCONF protocol
+      operations and content.</t>
+      <t>There are a number of data nodes defined in this YANG module that are
+      writable/creatable/deletable (i.e., config true, which is the default). These
+      data nodes may be considered sensitive or vulnerable in some network
+      environments. Write operations (e.g., edit-config) to these data nodes without
+      proper protection can have a negative effect on network operations. These are
+      the subtrees and data nodes and their sensitivity/vulnerability:</t>
+      <ul empty="true" spacing="normal">
+        <li>/isis:isis/srv6-cfg</li>
+        <li>/isis:isis/micro-loop-avoidance</li>
+        <li>/isis:isis/srv6-ti-lfa</li>
+      </ul>
+      <t>Writable data nodes represent the configuration of IS-IS SRv6,
+        micro-loop avoidance and ti-lfa enablement. The ability to modify
+        IS-IS SRv6 related configuration may allow the entire IS-IS
+        domain to be compromised, and traffic could be hijacked.</t>
+      <t>Some of the readable data nodes in this YANG module may be considered
+      sensitive or vulnerable in some network environments. It is thus important to
+      control read access (e.g., via get, get-config, or notification) to these data
+      nodes. These are the subtrees and data nodes and their
+      sensitivity/vulnerability:</t>
+      <ul empty="true" spacing="normal">
+        <li>/isis:lsp/isis:router-capabilities/v6-capability</li>
+        <li>/isis:lsp/isis:router-capabilities/srv6-msd</li>
+        <li>/isis:lsp/isis:extended-is-neighbor/isis:neighbor/srv6-adjacency-sids</li>
+        <li>/isis:lsp/isis:mt-is-neighbor/isis:neighbor/srv6-adjacency-sids</li>
+        <li>/isis:lsp/srv6-locators</li>
+        <li>/isis:interface/isis:adjacencies/isis:adjacency/end-x-sid</li>
+      </ul>
+      <t>Exposure of the LSDB will expose the detailed topology of the network
+        and router capabilities, and may facilitate other attacks.</t>
     </section>
-
-    <section title="Contributors">
-      <t><figure>
-          <artwork><![CDATA[Jiajia Dong
+    <section numbered="true" toc="default">
+      <name>Contributors</name>
+      <artwork name="" type="" align="left" alt=""><![CDATA[Jiajia Dong
 Huawei 
 China
 
 Email:dongjiajia@huawei.com]]></artwork>
-        </figure></t>
     </section>
-
-    <section title="Acknowledgements">
+    <section numbered="true" toc="default">
+      <name>Acknowledgements</name>
       <t>TBD.</t>
     </section>
-
-    <section anchor="IANA" title="IANA Considerations">
+    <section anchor="IANA" numbered="true" toc="default">
+      <name>IANA Considerations</name>
       <t>The IANA is requested to assign two new URIs from the IETF XML
-      registry (<xref target="RFC3688"/>). Authors are suggesting the
+      registry (<xref target="RFC3688" format="default"/>). Authors are suggesting the
       following URI:</t>
-
-      <t><figure>
-          <artwork align="center"><![CDATA[   URI: urn:ietf:params:xml:ns:yang:ietf-isis-srv6
+      <artwork align="center" name="" type="" alt=""><![CDATA[   URI: urn:ietf:params:xml:ns:yang:ietf-isis-srv6
    Registrant Contact: IS-IS WG
    XML: N/A, the requested URI is an XML namespace
 ]]></artwork>
-        </figure> This document also requests one new YANG module name in the
-      YANG Module Names registry (<xref target="RFC6020"/>) with the following
+      <t> This document also requests one new YANG module name in the
+      YANG Module Names registry (<xref target="RFC6020" format="default"/>) with the following
       suggestion :</t>
-
-      <figure>
-        <artwork align="center"><![CDATA[  name: ietf-isis-srv6 
+      <artwork align="center" name="" type="" alt=""><![CDATA[  name: ietf-isis-srv6 
   namespace: urn:ietf:params:xml:ns:yang:ietf-isis-srv6 prefix: isis-srv6 
   reference: RFC XXXX]]></artwork>
-      </figure>
     </section>
   </middle>
-
   <back>
-    <references title="References">
-      <?rfc include="reference.I-D.ietf-lsr-isis-srv6-extensions"?>
-
-      <?rfc include="reference.RFC.2119"?>
-
-      <?rfc include="reference.RFC.6020"?>
-
-      <?rfc include="reference.RFC.7950"?>
-
-      <?rfc include="reference.RFC.6241"?>
-
-      <?rfc include="reference.I-D.ietf-spring-srv6-yang"?>
-
-      <?rfc include="reference.I-D.ietf-spring-sr-yang"?>
-
-      <?rfc include="reference.I-D.ietf-isis-yang-isis-cfg"?>
-
-      <?rfc include="reference.RFC.6536"?>
-
-      <?rfc include="reference.RFC.6991"?>
-
-      <?rfc include="reference.RFC.3688"?>
-
-      <?rfc include="reference.RFC.8349"?>
+    <references>
+      <name>References</name>
+      <references>
+        <name>Normative References</name>
+      <reference anchor="I-D.ietf-lsr-isis-srv6-extensions" target="https://www.ietf.org/archive/id/draft-ietf-lsr-isis-srv6-extensions-18.txt" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-lsr-isis-srv6-extensions.xml">
+        <front>
+          <title>IS-IS Extensions to Support Segment Routing over IPv6 Dataplane</title>
+          <author fullname="Peter Psenak">
+            <organization>Cisco Systems</organization>
+          </author>
+          <author fullname="Clarence Filsfils">
+            <organization>Cisco Systems</organization>
+          </author>
+          <author fullname="Ahmed Bashandy">
+            <organization>Individual</organization>
+          </author>
+          <author fullname="Bruno Decraene">
+            <organization>Orange</organization>
+          </author>
+          <author fullname="Zhibo Hu">
+            <organization>Huawei Technologies</organization>
+          </author>
+          <date day="20" month="October" year="2021"/>
+          <abstract>
+            <t>The Segment Routing (SR) architecture allows flexible definition of the end-to-end path by encoding it as a sequence of topological elements called "segments". It can be implemented over the MPLS or the IPv6 data plane. This document describes the IS-IS extensions required to support Segment Routing over the IPv6 data plane. This document updates RFC 7370 by modifying an existing registry.</t>
+          </abstract>
+        </front>
+        <seriesInfo name="Internet-Draft" value="draft-ietf-lsr-isis-srv6-extensions-18"/>
+      </reference>
+      <reference anchor="RFC2119" target="https://www.rfc-editor.org/info/rfc2119" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml">
+        <front>
+          <title>Key words for use in RFCs to Indicate Requirement Levels</title>
+          <author fullname="S. Bradner" initials="S." surname="Bradner"/>
+          <date month="March" year="1997"/>
+          <abstract>
+            <t>In many standards track documents several words are used to signify the requirements in the specification.  These words are often capitalized.  This document defines these words as they should be interpreted in IETF documents.  This document specifies an Internet Best Current Practices for the Internet Community, and requests discussion and suggestions for improvements.</t>
+          </abstract>
+        </front>
+        <seriesInfo name="BCP" value="14"/>
+        <seriesInfo name="RFC" value="2119"/>
+        <seriesInfo name="DOI" value="10.17487/RFC2119"/>
+      </reference>
+      <reference anchor="RFC6020" target="https://www.rfc-editor.org/info/rfc6020" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6020.xml">
+        <front>
+          <title>YANG - A Data Modeling Language for the Network Configuration Protocol (NETCONF)</title>
+          <author fullname="M. Bjorklund" initials="M." role="editor" surname="Bjorklund"/>
+          <date month="October" year="2010"/>
+          <abstract>
+            <t>YANG is a data modeling language used to model configuration and state data manipulated by the Network Configuration Protocol (NETCONF), NETCONF remote procedure calls, and NETCONF notifications. [STANDARDS-TRACK]</t>
+          </abstract>
+        </front>
+        <seriesInfo name="RFC" value="6020"/>
+        <seriesInfo name="DOI" value="10.17487/RFC6020"/>
+      </reference>
+      <reference anchor="RFC6242" target="https://www.rfc-editor.org/info/rfc6242" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6242.xml">
+        <front>
+          <title>Using the NETCONF Protocol over Secure Shell (SSH)</title>
+          <author fullname="M. Wasserman" initials="M." surname="Wasserman"/>
+          <date month="June" year="2011"/>
+          <abstract>
+            <t>This document describes a method for invoking and running the Network Configuration Protocol (NETCONF) within a Secure Shell (SSH) session as an SSH subsystem.  This document obsoletes RFC 4742. [STANDARDS-TRACK]</t>
+          </abstract>
+        </front>
+        <seriesInfo name="RFC" value="6242"/>
+        <seriesInfo name="DOI" value="10.17487/RFC6242"/>
+      </reference>
+      <reference anchor="RFC7950" target="https://www.rfc-editor.org/info/rfc7950" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7950.xml">
+        <front>
+          <title>The YANG 1.1 Data Modeling Language</title>
+          <author fullname="M. Bjorklund" initials="M." role="editor" surname="Bjorklund"/>
+          <date month="August" year="2016"/>
+          <abstract>
+            <t>YANG is a data modeling language used to model configuration data, state data, Remote Procedure Calls, and notifications for network management protocols.  This document describes the syntax and semantics of version 1.1 of the YANG language.  YANG version 1.1 is a maintenance release of the YANG language, addressing ambiguities and defects in the original specification.  There are a small number of backward incompatibilities from YANG version 1.  This document also specifies the YANG mappings to the Network Configuration Protocol (NETCONF).</t>
+          </abstract>
+        </front>
+        <seriesInfo name="RFC" value="7950"/>
+        <seriesInfo name="DOI" value="10.17487/RFC7950"/>
+      </reference>
+      <reference anchor="RFC8040" target="https://www.rfc-editor.org/info/rfc8040" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8040.xml">
+        <front>
+          <title>RESTCONF Protocol</title>
+          <author fullname="A. Bierman" initials="A." surname="Bierman"/>
+          <author fullname="M. Bjorklund" initials="M." surname="Bjorklund"/>
+          <author fullname="K. Watsen" initials="K." surname="Watsen"/>
+          <date month="January" year="2017"/>
+          <abstract>
+            <t>This document describes an HTTP-based protocol that provides a programmatic interface for accessing data defined in YANG, using the datastore concepts defined in the Network Configuration Protocol (NETCONF).</t>
+          </abstract>
+        </front>
+        <seriesInfo name="RFC" value="8040"/>
+        <seriesInfo name="DOI" value="10.17487/RFC8040"/>
+      </reference>
+      <reference anchor="RFC8341" target="https://www.rfc-editor.org/info/rfc8341" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8341.xml">
+        <front>
+          <title>Network Configuration Access Control Model</title>
+          <author fullname="A. Bierman" initials="A." surname="Bierman"/>
+          <author fullname="M. Bjorklund" initials="M." surname="Bjorklund"/>
+          <date month="March" year="2018"/>
+          <abstract>
+            <t>The standardization of network configuration interfaces for use with the Network Configuration Protocol (NETCONF) or the RESTCONF protocol requires a structured and secure operating environment that promotes human usability and multi-vendor interoperability. There is a need for standard mechanisms to restrict NETCONF or RESTCONF protocol access for particular users to a preconfigured subset of all available NETCONF or RESTCONF protocol operations and content. This document defines such an access control model.</t>
+            <t>This document obsoletes RFC 6536.</t>
+          </abstract>
+        </front>
+        <seriesInfo name="STD" value="91"/>
+        <seriesInfo name="RFC" value="8341"/>
+        <seriesInfo name="DOI" value="10.17487/RFC8341"/>
+      </reference>
+      <reference anchor="RFC8446" target="https://www.rfc-editor.org/info/rfc8446" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8446.xml">
+        <front>
+          <title>The Transport Layer Security (TLS) Protocol Version 1.3</title>
+          <author fullname="E. Rescorla" initials="E." surname="Rescorla"/>
+          <date month="August" year="2018"/>
+          <abstract>
+            <t>This document specifies version 1.3 of the Transport Layer Security (TLS) protocol. TLS allows client/server applications to communicate over the Internet in a way that is designed to prevent eavesdropping, tampering, and message forgery.</t>
+            <t>This document updates RFCs 5705 and 6066, and obsoletes RFCs 5077, 5246, and 6961. This document also specifies new requirements for TLS 1.2 implementations.</t>
+          </abstract>
+        </front>
+        <seriesInfo name="RFC" value="8446"/>
+        <seriesInfo name="DOI" value="10.17487/RFC8446"/>
+      </reference>
+      <reference anchor="RFC6241" target="https://www.rfc-editor.org/info/rfc6241" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6241.xml">
+        <front>
+          <title>Network Configuration Protocol (NETCONF)</title>
+          <author fullname="R. Enns" initials="R." role="editor" surname="Enns"/>
+          <author fullname="M. Bjorklund" initials="M." role="editor" surname="Bjorklund"/>
+          <author fullname="J. Schoenwaelder" initials="J." role="editor" surname="Schoenwaelder"/>
+          <author fullname="A. Bierman" initials="A." role="editor" surname="Bierman"/>
+          <date month="June" year="2011"/>
+          <abstract>
+            <t>The Network Configuration Protocol (NETCONF) defined in this document provides mechanisms to install, manipulate, and delete the configuration of network devices.  It uses an Extensible Markup Language (XML)-based data encoding for the configuration data as well as the protocol messages.  The NETCONF protocol operations are realized as remote procedure calls (RPCs).  This document obsoletes RFC 4741. [STANDARDS-TRACK]</t>
+          </abstract>
+        </front>
+        <seriesInfo name="RFC" value="6241"/>
+        <seriesInfo name="DOI" value="10.17487/RFC6241"/>
+      </reference>
+      <reference anchor="I-D.ietf-spring-srv6-yang" target="https://www.ietf.org/archive/id/draft-ietf-spring-srv6-yang-02.txt" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-spring-srv6-yang.xml">
+        <front>
+          <title>YANG Data Model for SRv6 Base and Static</title>
+          <author fullname="Syed Raza" initials="S." surname="Raza">
+            <organization>Cisco Systems</organization>
+          </author>
+          <author fullname="Sonal Agarwal" initials="S." surname="Agarwal">
+            <organization>Cisco Systems</organization>
+          </author>
+          <author fullname="Xufeng Liu" initials="X." surname="Liu">
+            <organization>Volta Networks</organization>
+          </author>
+          <author fullname="Zhibo Hu" initials="Z." surname="Hu">
+            <organization>Huawei Technologies</organization>
+          </author>
+          <author fullname="Iftekhar Hussain" initials="I." surname="Hussain">
+            <organization>Infinera Corporation</organization>
+          </author>
+          <author fullname="Himanshu C. Shah" initials="H. C." surname="Shah">
+            <organization>Ciena Corporation</organization>
+          </author>
+          <author fullname="Daniel Voyer" initials="D." surname="Voyer">
+            <organization>Bell Canada</organization>
+          </author>
+          <author fullname="Satoru Matsushima" initials="S." surname="Matsushima">
+            <organization>SoftBank</organization>
+          </author>
+          <author fullname="Katsuhiro Horiba" initials="K." surname="Horiba">
+            <organization>SoftBank</organization>
+          </author>
+          <author fullname="Jaganbabu Rajamanickam" initials="J." surname="Rajamanickam">
+            <organization>Cisco Systems</organization>
+          </author>
+          <author fullname="Ahmed Abdelsalam" initials="A." surname="Abdelsalam">
+            <organization>Cisco Systems</organization>
+          </author>
+          <date day="23" month="September" year="2022"/>
+          <abstract>
+            <t>This document describes a YANG data model for Segment Routing IPv6 (SRv6) base. The model serves as a base framework for configuring and managing an SRv6 subsystem and expected to be augmented by other SRv6 technology models accordingly. Additionally, this document also specifies the model for the SRv6 Static application. The YANG modules in this document conform to the Network Management Datastore Architecture (NMDA).</t>
+          </abstract>
+        </front>
+        <seriesInfo name="Internet-Draft" value="draft-ietf-spring-srv6-yang-02"/>
+      </reference>
+      <reference anchor="I-D.ietf-spring-sr-yang" target="https://www.ietf.org/archive/id/draft-ietf-spring-sr-yang-30.txt" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-spring-sr-yang.xml">
+        <front>
+          <title>YANG Data Model for Segment Routing</title>
+          <author fullname="Stephane Litkowski">
+            <organization>Cisco Systems</organization>
+          </author>
+          <author fullname="Yingzhen Qu">
+            <organization>Futurewei</organization>
+          </author>
+          <author fullname="Acee Lindem">
+            <organization>Cisco Systems</organization>
+          </author>
+          <author fullname="Pushpasis Sarkar">
+            <organization>Arrcus Networks</organization>
+          </author>
+          <author fullname="Jeff Tantsura">
+            <organization>Apstra</organization>
+          </author>
+          <date day="25" month="January" year="2021"/>
+          <abstract>
+            <t>This document defines three YANG data models. The first is for Segment Routing (SR) configuration and operation, which is to be augmented by different Segment Routing data planes. The next is a YANG data model that defines a collection of generic types and groupings for SR. The third module defines the configuration and operational states for the Segment Routing MPLS data plane.</t>
+          </abstract>
+        </front>
+        <seriesInfo name="Internet-Draft" value="draft-ietf-spring-sr-yang-30"/>
+      </reference>
+      <reference anchor="I-D.ietf-isis-yang-isis-cfg" target="https://www.ietf.org/archive/id/draft-ietf-isis-yang-isis-cfg-42.txt" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-isis-yang-isis-cfg.xml">
+        <front>
+          <title>YANG Data Model for IS-IS Protocol</title>
+          <author fullname="Stephane Litkowski">
+            <organization>Cisco Systems</organization>
+          </author>
+          <author fullname="Derek Yeung">
+            <organization>Arrcus, Inc</organization>
+          </author>
+          <author fullname="Acee Lindem">
+            <organization>Cisco Systems</organization>
+          </author>
+          <author fullname="Jeffrey Zhang">
+            <organization>Juniper Networks</organization>
+          </author>
+          <author fullname="Ladislav Lhotka">
+            <organization>CZ.NIC</organization>
+          </author>
+          <date day="15" month="October" year="2019"/>
+          <abstract>
+            <t>This document defines a YANG data model that can be used to configure and manage the IS-IS protocol on network elements.</t>
+          </abstract>
+        </front>
+        <seriesInfo name="Internet-Draft" value="draft-ietf-isis-yang-isis-cfg-42"/>
+      </reference>
+      <reference anchor="RFC6991" target="https://www.rfc-editor.org/info/rfc6991" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6991.xml">
+        <front>
+          <title>Common YANG Data Types</title>
+          <author fullname="J. Schoenwaelder" initials="J." role="editor" surname="Schoenwaelder"/>
+          <date month="July" year="2013"/>
+          <abstract>
+            <t>This document introduces a collection of common data types to be used with the YANG data modeling language.  This document obsoletes RFC 6021.</t>
+          </abstract>
+        </front>
+        <seriesInfo name="RFC" value="6991"/>
+        <seriesInfo name="DOI" value="10.17487/RFC6991"/>
+      </reference>
+      <reference anchor="RFC3688" target="https://www.rfc-editor.org/info/rfc3688" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.3688.xml">
+        <front>
+          <title>The IETF XML Registry</title>
+          <author fullname="M. Mealling" initials="M." surname="Mealling"/>
+          <date month="January" year="2004"/>
+          <abstract>
+            <t>This document describes an IANA maintained registry for IETF standards which use Extensible Markup Language (XML) related items such as Namespaces, Document Type Declarations (DTDs), Schemas, and Resource Description Framework (RDF) Schemas.</t>
+          </abstract>
+        </front>
+        <seriesInfo name="BCP" value="81"/>
+        <seriesInfo name="RFC" value="3688"/>
+        <seriesInfo name="DOI" value="10.17487/RFC3688"/>
+      </reference>
+      <reference anchor="RFC8349" target="https://www.rfc-editor.org/info/rfc8349" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8349.xml">
+        <front>
+          <title>A YANG Data Model for Routing Management (NMDA Version)</title>
+          <author fullname="L. Lhotka" initials="L." surname="Lhotka"/>
+          <author fullname="A. Lindem" initials="A." surname="Lindem"/>
+          <author fullname="Y. Qu" initials="Y." surname="Qu"/>
+          <date month="March" year="2018"/>
+          <abstract>
+            <t>This document specifies three YANG modules and one submodule. Together, they form the core routing data model that serves as a framework for configuring and managing a routing subsystem. It is expected that these modules will be augmented by additional YANG modules defining data models for control-plane protocols, route filters, and other functions. The core routing data model provides common building blocks for such extensions -- routes, Routing Information Bases (RIBs), and control-plane protocols.</t>
+            <t>The YANG modules in this document conform to the Network Management Datastore Architecture (NMDA). This document obsoletes RFC 8022.</t>
+          </abstract>
+        </front>
+        <seriesInfo name="RFC" value="8349"/>
+        <seriesInfo name="DOI" value="10.17487/RFC8349"/>
+      </reference>
     </references>
-
-    <section title="Configuration examples">
+    </references>
+    <section numbered="true" toc="default">
+      <name>Configuration examples</name>
       <t>The following is an XML example using IS-IS SRv6 YANG module.</t>
-
-      <figure>
-        <artwork><![CDATA[   <routing xmlns="urn:ietf:params:xml:ns:yang:ietf-routing">
+      <artwork name="" type="" align="left" alt=""><![CDATA[   <routing xmlns="urn:ietf:params:xml:ns:yang:ietf-routing">
      <control-plane-protocols>
     <control-plane-protocol>
       <isis xmlns="urn:ietf:params:xml:ns:yang:ietf-isis">
@@ -1086,12 +1312,8 @@ Email:dongjiajia@huawei.com]]></artwork>
   </control-plane-protocols>
    </routing>
 ]]></artwork>
-      </figure>
-
       <t>The following is the corresponding example using JSON format.</t>
-
-      <figure>
-        <artwork><![CDATA[{
+      <artwork name="" type="" align="left" alt=""><![CDATA[{
    "control-plane-protocols": {
       "control-plane-protocol": {
          "isis": {
@@ -1123,7 +1345,6 @@ Email:dongjiajia@huawei.com]]></artwork>
       }
    }
 }]]></artwork>
-      </figure>
     </section>
   </back>
 </rfc>
