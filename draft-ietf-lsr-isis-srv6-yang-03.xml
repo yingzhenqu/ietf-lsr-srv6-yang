@@ -15,12 +15,12 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" docName="draft-ietf-lsr-isis-srv6-yang-02" ipr="trust200902" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" tocDepth="3" symRefs="true" sortRefs="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" docName="draft-ietf-lsr-isis-srv6-yang-03" ipr="trust200902" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" tocDepth="3" symRefs="true" sortRefs="true" version="3">
   <!-- xml2rfc v2v3 conversion 3.13.1 -->
   <front>
     <title abbrev="YANG Data Model for IS-IS SRv6">YANG Data Model for IS-IS
     SRv6</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-lsr-isis-srv6-yang-02"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-lsr-isis-srv6-yang-03"/>
     <author fullname="Zhibo Hu" initials="Z" surname="Hu">
       <organization>Huawei</organization>
       <address>
@@ -85,8 +85,8 @@
     <date/>
     <abstract>
       <t>This document defines a YANG data model that can be used to configure
-      and manage IS-IS SRv6 <xref target="I-D.ietf-lsr-isis-srv6-extensions" format="default">
-        </xref>.</t>
+      and manage IS-IS Segment Routing over the IPv6 Data Plane. 
+      </t>
     </abstract>
     <note>
       <name>Requirements Language</name>
@@ -98,17 +98,17 @@
   <middle>
     <section numbered="true" toc="default">
       <name>Overview</name>
-      <t>YANG<xref target="RFC7950" format="default"> </xref> is
+      <t>YANG <xref target="RFC7950" format="default"> </xref> is
       a data definition language used to define the contents of a conceptual
       data store that allows networked devices to be managed using
-      NETCONF<xref target="RFC6241" format="default"> </xref>. YANG is proving relevant beyond
+      NETCONF <xref target="RFC6241" format="default"> </xref>. YANG is proving relevant beyond
       its initial confines, as bindings to other interfaces (e.g., REST) and
       encodings other than XML (e.g., JSON) are being defined. Furthermore,
       YANG data models can be used as the basis for implementation of other
       interfaces, such as CLI and programmatic APIs.</t>
       <t>This document defines a YANG data model that can be used to configure
-      and manage IS-IS Segment Routing over IPv6 Dataplane, and it is an
-      augmentation to the IS-IS YANG data model.</t>
+      and manage IS-IS Segment Routing over the IPv6 Data Plane <xref target="RFC9352" format="default"/>,
+      and it is an augmentation to the IS-IS YANG data model <xref target="RFC9130" format="default"/>.</t>
     </section>
     <section numbered="true" toc="default">
       <name>IS-IS SRv6</name>
@@ -117,8 +117,8 @@
       <t>The IS-IS SRv6 YANG module requires support for the base srv6
       module<xref target="I-D.ietf-spring-srv6-yang" format="default"/>, which defines the
       global srv6 configuration independent of any specific routing protocol
-      configuration, and support of IS-IS base model <xref target="I-D.ietf-isis-yang-isis-cfg" format="default"/> which defines basic IS-IS
-      configuration and state. This module uses types defined in <xref target="RFC6991" format="default"/>. It also references <xref target="RFC8349" format="default"/>, and <xref target="I-D.ietf-spring-sr-yang" format="default"/>.</t>
+      configuration, and support of IS-IS base model <xref target="RFC9130" format="default"/> which defines basic IS-IS
+      configuration and state. This module uses types defined in <xref target="RFC6991" format="default"/>. It also references <xref target="RFC8349" format="default"/>, and <xref target="RFC9020" format="default"/>.</t>
       <t>The figure below describes the overall structure of the isis-srv6
       YANG module:</t>
       <artwork align="left" name="" type="" alt=""><![CDATA[module: ietf-isis-srv6
@@ -260,7 +260,7 @@
     </section>
     <section numbered="true" toc="default">
       <name>IS-IS SRv6 YANG Module</name>
-      <sourcecode name="ietf-isis-srv6@2022-09-25.yang" type="yang" markers="true"><![CDATA[
+      <sourcecode name="ietf-isis-srv6@2023-03-07.yang" type="yang" markers="true"><![CDATA[
 module ietf-isis-srv6 {
   yang-version 1.1;
   namespace "urn:ietf:params:xml:ns:"
@@ -269,25 +269,28 @@ module ietf-isis-srv6 {
 
   import ietf-routing {
     prefix "rt";
-    reference "RFC8349: A YANG Data Model for
-              Routing Management (NMDA Version)";
+    reference 
+      "RFC8349: A YANG Data Model for
+                Routing Management (NMDA Version)";
   }
 
   import ietf-isis {
     prefix "isis";
-    reference "draft-ietf-isis-yang-isis-cfg: YANG
-               Data Model for IS-IS Protocol";
+    reference
+      "RFC 9130: YANG Data Model for the IS-IS Protocol";
   }
 
   import ietf-inet-types {
     prefix "inet";
-    reference "RFC 6991:Common YANG Data Types";
+    reference
+      "RFC 6991:Common YANG Data Types";
   }
 
   import ietf-segment-routing {
     prefix sr;
-    reference "RFC 9020: YANG Data Model for Segment
-               Routing";
+    reference
+      "RFC 9020: YANG Data Model for Segment
+                 Routing";
   }
   import ietf-srv6-base {
     prefix "srv6";
@@ -300,16 +303,18 @@ module ietf-isis-srv6 {
    "IETF LSR Working Group";
 
   contact
-    "WG List:  <mailto:spring@ietf.org>
-    Author:    Zhibo Hu
-               <mailto:huzhibo@huawei.com>
-    Author:    Dan Ye
-               <mailto:daye@cisco.com>
-    Author:    Yingzhen Qu
-               <mailto:yingzhen.qu@futurewei.com>
-    Author:    Qiufang Ma
+    "WG Web:   <http://datatracker.ietf.org/wg/lsr>
+     WG List:  <mailto:lsr@ietf.org>
+    
+     Author:    Zhibo Hu
+                <mailto:huzhibo@huawei.com>
+     Author:    Dan Ye
+                <mailto:daye@cisco.com>
+     Author:    Yingzhen Qu
+                <mailto:yingzhen.qu@futurewei.com>
+     Author:    Qiufang Ma
                <mailto:maqiufang1@huawei.com>
-    ";
+     ";
   description
     "The YANG module defines the configuration and operatioanl state
      for IS-IS extension to support Segment Routing over IPv6 data
@@ -318,7 +323,7 @@ module ietf-isis-srv6 {
      This YANG model conforms to the Network Management
      Datastore Architecture (NDMA) as described in RFC 8342.
 
-     Copyright (c) 2022 IETF Trust and the persons identified as
+     Copyright (c) 2023 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
@@ -339,7 +344,7 @@ module ietf-isis-srv6 {
      they appear in all capitals, as shown here.";
 
 
-  revision 2022-09-25 {
+  revision 2023-03-07 {
     description
         "Initial revision.";
     reference 
@@ -1010,9 +1015,9 @@ Email:dongjiajia@huawei.com]]></artwork>
       <name>References</name>
       <references>
         <name>Normative References</name>
-      <reference anchor="I-D.ietf-lsr-isis-srv6-extensions" target="https://www.ietf.org/archive/id/draft-ietf-lsr-isis-srv6-extensions-18.txt" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-lsr-isis-srv6-extensions.xml">
+      <reference anchor="RFC9352" target="https://www.rfc-editor.org/info/rfc9352" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9352.xml">
         <front>
-          <title>IS-IS Extensions to Support Segment Routing over IPv6 Dataplane</title>
+          <title>IS-IS Extensions to Support Segment Routing over the IPv6 Dataplane</title>
           <author fullname="Peter Psenak">
             <organization>Cisco Systems</organization>
           </author>
@@ -1020,7 +1025,7 @@ Email:dongjiajia@huawei.com]]></artwork>
             <organization>Cisco Systems</organization>
           </author>
           <author fullname="Ahmed Bashandy">
-            <organization>Individual</organization>
+            <organization>Cisco Systems</organization>
           </author>
           <author fullname="Bruno Decraene">
             <organization>Orange</organization>
@@ -1033,7 +1038,8 @@ Email:dongjiajia@huawei.com]]></artwork>
             <t>The Segment Routing (SR) architecture allows flexible definition of the end-to-end path by encoding it as a sequence of topological elements called "segments". It can be implemented over the MPLS or the IPv6 data plane. This document describes the IS-IS extensions required to support Segment Routing over the IPv6 data plane. This document updates RFC 7370 by modifying an existing registry.</t>
           </abstract>
         </front>
-        <seriesInfo name="Internet-Draft" value="draft-ietf-lsr-isis-srv6-extensions-18"/>
+        <seriesInfo name="RFC" value="9352"/>
+        <seriesInfo name="DOI" value="10.17487/RFC9352"/>
       </reference>
       <reference anchor="RFC2119" target="https://www.rfc-editor.org/info/rfc2119" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml">
         <front>
@@ -1184,7 +1190,7 @@ Email:dongjiajia@huawei.com]]></artwork>
         </front>
         <seriesInfo name="Internet-Draft" value="draft-ietf-spring-srv6-yang-02"/>
       </reference>
-      <reference anchor="I-D.ietf-spring-sr-yang" target="https://www.ietf.org/archive/id/draft-ietf-spring-sr-yang-30.txt" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-spring-sr-yang.xml">
+      <reference anchor="RFC9020" target="https://www.rfc-editor.org/info/rfc9020" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9020.xml">
         <front>
           <title>YANG Data Model for Segment Routing</title>
           <author fullname="Stephane Litkowski">
@@ -1207,9 +1213,10 @@ Email:dongjiajia@huawei.com]]></artwork>
             <t>This document defines three YANG data models. The first is for Segment Routing (SR) configuration and operation, which is to be augmented by different Segment Routing data planes. The next is a YANG data model that defines a collection of generic types and groupings for SR. The third module defines the configuration and operational states for the Segment Routing MPLS data plane.</t>
           </abstract>
         </front>
-        <seriesInfo name="Internet-Draft" value="draft-ietf-spring-sr-yang-30"/>
+        <seriesInfo name="RFC" value="9020"/>
+        <seriesInfo name="DOI" value="10.17487/RFC9020"/>
       </reference>
-      <reference anchor="I-D.ietf-isis-yang-isis-cfg" target="https://www.ietf.org/archive/id/draft-ietf-isis-yang-isis-cfg-42.txt" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-isis-yang-isis-cfg.xml">
+      <reference anchor="RFC9130" target="https://www.rfc-editor.org/info/rfc9130" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9230.xml">
         <front>
           <title>YANG Data Model for IS-IS Protocol</title>
           <author fullname="Stephane Litkowski">
@@ -1232,7 +1239,8 @@ Email:dongjiajia@huawei.com]]></artwork>
             <t>This document defines a YANG data model that can be used to configure and manage the IS-IS protocol on network elements.</t>
           </abstract>
         </front>
-        <seriesInfo name="Internet-Draft" value="draft-ietf-isis-yang-isis-cfg-42"/>
+        <seriesInfo name="RFC" value="9130"/>
+        <seriesInfo name="DOI" value="10.17487/RFC9130"/>
       </reference>
       <reference anchor="RFC6991" target="https://www.rfc-editor.org/info/rfc6991" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6991.xml">
         <front>
