@@ -15,12 +15,12 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" docName="draft-ietf-lsr-ospf-srv6-yang-02" ipr="trust200902" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" tocDepth="3" symRefs="true" sortRefs="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" docName="draft-ietf-lsr-ospf-srv6-yang-03" ipr="trust200902" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" tocDepth="3" symRefs="true" sortRefs="true" version="3">
   <!-- xml2rfc v2v3 conversion 3.13.1 -->
   <front>
     <title abbrev="YANG Data Model for OSPF SRv6">YANG Data Model for OSPF
     SRv6</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-lsr-ospf-srv6-yang-02"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-lsr-ospf-srv6-yang-03"/>
     <author fullname="Zhibo Hu" initials="Z" surname="Hu">
       <organization>Huawei Technologies</organization>
       <address>
@@ -70,7 +70,7 @@
       </address>
     </author>
     <author fullname="Acee Lindem" initials="A" surname="Lindem">
-      <organization>Cisco Systems</organization>
+      <organization></organization>
       <address>
         <postal>
           <street>301 Midenhall Way</street>
@@ -78,14 +78,13 @@
           <code>27513</code>
           <country>USA</country>
         </postal>
-        <email>acee@cisco.com</email>
+        <email>acee.ietf@gmail.com</email>
       </address>
     </author>
     <date/>
     <abstract>
       <t>This document defines a YANG data model that can be used to configure
-      and manage OSPFv3 SRv6 as defined in
-      I-D.ietf-lsr-ospfv3-srv6-extensions.</t>
+      and manage OSPFv3 Segment Routing over the IPv6 Data Plane.</t>
     </abstract>
     <note>
       <name>Requirements Language</name>
@@ -106,8 +105,8 @@
       YANG data models can be used as the basis for implementation of other
       interfaces, such as CLI and programmatic APIs.</t>
       <t>This document defines a YANG data model that can be used to configure
-      and manage OSPFv3 SRv6 and it is an augmentation to the OSPF YANG data
-      model.</t>
+      and manage OSPFv3 SRv6 <xref target="I-D.ietf-lsr-ospfv3-srv6-extensions" format="default"/>
+      and it is an augmentation to the OSPF YANG data model  <xref target="RFC9129" format="default"/> .</t>
     </section>
     <section numbered="true" toc="default">
       <name>Terminology and Notation</name>
@@ -161,7 +160,7 @@
 |ospfv3-e-lsa| ietf-ospfv3-extended-lsa    | I-D.ietf-lsr-ospfv3   |
 |            |                             | -extended-lsa-yang    |
 |            |                             |                       |
-| ospf       | ietf-ospf                   | I-D.ietf-ospf-yang    |
+| ospf       | ietf-ospf                   | [RFC9129]             |
 |            |                             |                       |
 | srv6       | ietf-srv6-base              | I-D.ietf-spring-srv6  |
 |            |                             |  -yang                |
@@ -182,7 +181,7 @@
       <name>OSPFv3 SRv6 Configuration</name>
       <t>This document defines a model for OSPFv3 SRv6 feature. It is an
       augmentation of the OSPF base model.</t>
-      <t>The OSPFv3 SRv6 YANG module requires support of OSPF base model <xref target="I-D.ietf-ospf-yang" format="default"/> which defines basic OSPF configuration and
+      <t>The OSPFv3 SRv6 YANG module requires support of OSPF base model <xref target="RFC9129" format="default"/> which defines basic OSPF configuration and
       state and support of OSPFv3 Extended LSAs model <xref target="I-D.ietf-lsr-ospfv3-extended-lsa-yang" format="default"/>.</t>
       <section numbered="true" toc="default">
         <name>SRv6 Activation</name>
@@ -303,7 +302,7 @@
       </section>
       <section numbered="true" toc="default">
         <name>OSPFv3 SRv6 YANG Module</name>
-        <sourcecode name="ietf-ospfv3-srv6@2022-09-25.yang" type="" markers="true"><![CDATA[
+        <sourcecode name="ietf-ospfv3-srv6@2023-03-07.yang" type="" markers="true"><![CDATA[
 module ietf-ospfv3-srv6 {
   yang-version 1.1;
   namespace "urn:ietf:params:xml:ns:"
@@ -312,13 +311,15 @@ module ietf-ospfv3-srv6 {
 
   import ietf-yang-types {
     prefix "yang";
-    reference "RFC 6991: Common YANG Data Types";
+    reference 
+      "RFC 6991: Common YANG Data Types";
   }
 
   import ietf-routing {
     prefix "rt";
-    reference "RFC 8349: A YANG Data Model for Routing
-               Management (NMDA Version)";
+    reference 
+      "RFC 8349: A YANG Data Model for Routing
+                 Management (NMDA Version)";
   }
 
   import ietf-ospfv3-extended-lsa {
@@ -327,6 +328,8 @@ module ietf-ospfv3-srv6 {
 
   import ietf-ospf {
     prefix "ospf";
+    reference
+      "RFC 9129: YANG Data Model for the OSPF Protocol";
   }
 
   import ietf-srv6-base {
@@ -335,10 +338,14 @@ module ietf-ospfv3-srv6 {
 
   import ietf-inet-types {
     prefix "inet";
+    reference
+         "RFC 6991: Common YANG Data Types";
   }
 
   import ietf-segment-routing {
     prefix "sr";
+    reference
+         "RFC 9020: YANG Data Model for Segment Routing";
   }
 
   organization
@@ -357,7 +364,7 @@ module ietf-ospfv3-srv6 {
      Author:    Yingzhen Qu
                 <mailto:yingzhen.qu@futurewei.com>
      Author:    Acee Lindem
-                <mailto:acee@cisco.com>
+                <mailto:acee.ietf@gmail.com>
     ";
 
   description
@@ -368,7 +375,7 @@ module ietf-ospfv3-srv6 {
      This YANG model conforms to the Network Management
      Datastore Architecture (NDMA) as described in RFC 8342.
 
-     Copyright (c) 2022 IETF Trust and the persons identified as
+     Copyright (c) 2023 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
@@ -388,7 +395,7 @@ module ietf-ospfv3-srv6 {
      described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
      they appear in all capitals, as shown here.";
 
-  revision 2022-09-25 {
+  revision 2023-03-07 {
     description
       "Initial revision.";
     reference 
@@ -833,8 +840,7 @@ module ietf-ospfv3-srv6 {
   augment "/rt:routing/" +
           "rt:control-plane-protocols/rt:control-plane-protocol"+
           "/ospf:ospf" {
-    when "/rt:routing/rt:control-plane-protocols/"+
-         "rt:control-plane-protocol/rt:type = 'ospf:ospfv3'" {
+    when "../rt:type = 'ospf:ospfv3'" {
       description
         "This augment OSPFv3 routing protocol when used";
     }
@@ -903,8 +909,7 @@ module ietf-ospfv3-srv6 {
   augment "/rt:routing/" +
           "rt:control-plane-protocols/rt:control-plane-protocol"+
           "/ospf:ospf/ospf:fast-reroute"{
-    when "/rt:routing/rt:control-plane-protocols/"+
-         "rt:control-plane-protocol/rt:type = 'ospf:ospfv3'"{
+    when "../../rt:type = 'ospf:ospfv3'"{
       description
         "This augment OSPFv3 routing protocol when used";
     }
@@ -930,8 +935,7 @@ module ietf-ospfv3-srv6 {
            + "ospf:as-scope-lsa-type/ospf:as-scope-lsas/"
            + "ospf:as-scope-lsa/ospf:version/ospf:ospfv3/"
            + "ospf:ospfv3/ospf:body" {
-    when "/rt:routing/rt:control-plane-protocols/"+
-         "rt:control-plane-protocol/rt:type = 'ospf:ospfv3'" {
+    when "../../../../../../../rt:type = 'ospf:ospfv3'" {
       description
         "This augment OSPFv3 routing protocol when used";
     }
@@ -950,8 +954,7 @@ module ietf-ospfv3-srv6 {
            + "ospf:as-scope-lsa-type/ospf:as-scope-lsas/"
            + "ospf:as-scope-lsa/ospf:version/ospf:ospfv3/"
            + "ospf:ospfv3/ospf:body/ospf:router-information" {
-    when "/rt:routing/rt:control-plane-protocols/"+
-         "rt:control-plane-protocol/rt:type = 'ospf:ospfv3'" {
+    when "../../../../../../../../rt:type = 'ospf:ospfv3'" {
       description
         "This augment OSPFv3 routing protocol when used";
     }
@@ -969,8 +972,9 @@ module ietf-ospfv3-srv6 {
         + "/ospf:ospfv3/ospf:body/ospfv3-e-lsa:e-router/"
         + "ospfv3-e-lsa:e-router-tlvs/"
         + "ospfv3-e-lsa:link-tlv" {
-    when "/rt:routing/rt:control-plane-protocols/"+
-         "rt:control-plane-protocol/rt:type = 'ospf:ospfv3'" {
+    when "../../../../../../../../../../../../rt:type = 'ospf:ospfv3'" {
+      description
+        "This augment OSPFv3 routing protocol when used";
     }
     description
       "This augments OSPFv3 protocol neighbor.";
@@ -1220,9 +1224,9 @@ module ietf-ospfv3-srv6 {
         <seriesInfo name="RFC" value="6241"/>
         <seriesInfo name="DOI" value="10.17487/RFC6241"/>
       </reference>
-      <reference anchor="I-D.ietf-ospf-yang" target="https://www.ietf.org/archive/id/draft-ietf-ospf-yang-29.txt" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-ospf-yang.xml">
+      <reference anchor="RFC9129" target="https://www.rfc-editor.org/info/rfc9129" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9129.xml">
         <front>
-          <title>YANG Data Model for OSPF Protocol</title>
+          <title>YANG Data Model for the OSPF Protocol</title>
           <author fullname="Derek Yeung">
             <organization>Arrcus</organization>
           </author>
@@ -1243,7 +1247,8 @@ module ietf-ospfv3-srv6 {
             <t>This document defines a YANG data model that can be used to configure and manage OSPF. The model is based on YANG 1.1 as defined in RFC 7950 and conforms to the Network Management Datastore Architecture (NMDA) as described in RFC 8342.</t>
           </abstract>
         </front>
-        <seriesInfo name="Internet-Draft" value="draft-ietf-ospf-yang-29"/>
+        <seriesInfo name="RFC" value="9129"/>
+        <seriesInfo name="DOI" value="10.17487/RFC9129"/>
       </reference>
       <reference anchor="RFC6536" target="https://www.rfc-editor.org/info/rfc6536" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6536.xml">
         <front>
