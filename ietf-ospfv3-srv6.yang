@@ -5,47 +5,40 @@ module ietf-ospfv3-srv6 {
   prefix ospfv3-srv6;
 
   import ietf-yang-types {
-    prefix "yang";
-    reference 
+    prefix yang;
+    reference
       "RFC 6991: Common YANG Data Types";
   }
-
   import ietf-routing {
-    prefix "rt";
-    reference 
+    prefix rt;
+    reference
       "RFC 8349: A YANG Data Model for Routing
                  Management (NMDA Version)";
   }
-
   import ietf-ospfv3-extended-lsa {
-    prefix "ospfv3-e-lsa";
+    prefix ospfv3-e-lsa;
   }
-
   import ietf-ospf {
-    prefix "ospf";
+    prefix ospf;
     reference
       "RFC 9129: YANG Data Model for the OSPF Protocol";
   }
-
   import ietf-srv6-base {
-    prefix "srv6";
+    prefix srv6;
   }
-
   import ietf-inet-types {
-    prefix "inet";
+    prefix inet;
     reference
-         "RFC 6991: Common YANG Data Types";
+      "RFC 6991: Common YANG Data Types";
   }
-
   import ietf-segment-routing {
-    prefix "sr";
+    prefix sr;
     reference
-         "RFC 9020: YANG Data Model for Segment Routing";
+      "RFC 9020: YANG Data Model for Segment Routing";
   }
 
   organization
-   "IETF LSR Working Group";
-
+    "IETF LSR Working Group";
   contact
     "WG Web:   <https://datatracker.ietf.org/group/lsr/>
      WG List:  <mailto:lsr@ietf.org>
@@ -57,11 +50,10 @@ module ietf-ospfv3-srv6 {
      Author:    Kamran Raza
                 <mailto:skraza@cisco.com>
      Author:    Yingzhen Qu
-                <mailto:yingzhen.qu@futurewei.com>
+                <mailto:yingzhen.ietf@gmail.com>
      Author:    Acee Lindem
                 <mailto:acee.ietf@gmail.com>
     ";
-
   description
     "The YANG module defines the configuration and operatioanl state
      for OSPFv3 extensions to support Segment Routing over IPv6 data
@@ -70,7 +62,7 @@ module ietf-ospfv3-srv6 {
      This YANG model conforms to the Network Management
      Datastore Architecture (NDMA) as described in RFC 8342.
 
-     Copyright (c) 2023 IETF Trust and the persons identified as
+     Copyright (c) 2024 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
@@ -90,105 +82,106 @@ module ietf-ospfv3-srv6 {
      described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
      they appear in all capitals, as shown here.";
 
-  revision 2023-09-09 {
+  revision 2024-03-03 {
     description
       "Initial revision.";
-    reference 
+    reference
       "RFC XXXX: YANG Data Model for OSPF SRv6";
   }
 
   /* Identities */
+
   identity SRV6_END_FUNC_TYPE {
     description
       "Base identity type for srv6 endpoint function code points.";
   }
 
   identity SRV6_END_FUNC_NO_PSP_USP {
-    base "SRV6_END_FUNC_TYPE";
+    base SRV6_END_FUNC_TYPE;
     description
       "End (no PSP, no USP).";
   }
 
   identity SRV6_END_FUNC_PSP {
-    base "SRV6_END_FUNC_TYPE";
+    base SRV6_END_FUNC_TYPE;
     description
       "End with PSP.";
   }
 
   identity SRV6_END_FUNC_USP {
-    base "SRV6_END_FUNC_TYPE";
+    base SRV6_END_FUNC_TYPE;
     description
       "END with USP.";
   }
 
   identity SRV6_END_FUNC_PSP_USP {
-    base "SRV6_END_FUNC_TYPE";
+    base SRV6_END_FUNC_TYPE;
     description
       "END with PSP & USP.";
   }
 
   identity SRV6_END_T_FUNC_NO_PSP_USP {
-    base "SRV6_END_FUNC_TYPE";
+    base SRV6_END_FUNC_TYPE;
     description
       "End.T (no PSP, no USP).";
   }
 
   identity SRV6_END_T_FUNC_PSP {
-    base "SRV6_END_FUNC_TYPE";
+    base SRV6_END_FUNC_TYPE;
     description
       "End.T with PSP.";
   }
 
   identity SRV6_END_T_FUNC_USP {
-    base "SRV6_END_FUNC_TYPE";
+    base SRV6_END_FUNC_TYPE;
     description
       "End.T with USP.";
   }
 
   identity SRV6_END_T_FUNC_PSP_USP {
-    base "SRV6_END_FUNC_TYPE";
+    base SRV6_END_FUNC_TYPE;
     description
       "End.T with PSP & USP.";
   }
 
   identity SRV6_END_X_FUNC_NO_PSP_USP {
-    base "SRV6_END_FUNC_TYPE";
+    base SRV6_END_FUNC_TYPE;
     description
       "End.x (no PSP, no USP).";
   }
 
   identity SRV6_END_X_FUNC_PSP {
-    base "SRV6_END_FUNC_TYPE";
+    base SRV6_END_FUNC_TYPE;
     description
       "End.x with PSP.";
   }
 
   identity SRV6_END_X_FUNC_USP {
-    base "SRV6_END_FUNC_TYPE";
+    base SRV6_END_FUNC_TYPE;
     description
       "End.x with USP.";
   }
 
   identity SRV6_END_X_FUNC_PSP_USP {
-    base "SRV6_END_FUNC_TYPE";
+    base SRV6_END_FUNC_TYPE;
     description
       "End.x with PSP & USP.";
   }
 
   identity SRV6_END_FUNC_DX6 {
-    base "SRV6_END_FUNC_TYPE";
+    base SRV6_END_FUNC_TYPE;
     description
       "End.DX6 function.";
   }
 
   identity SRV6_END_FUNC_DT6 {
-    base "SRV6_END_FUNC_TYPE";
+    base SRV6_END_FUNC_TYPE;
     description
       "End.DT6 function.";
   }
 
   identity SRV6_END_FUNC_OTP {
-    base "SRV6_END_FUNC_TYPE";
+    base SRV6_END_FUNC_TYPE;
     description
       "END.OTP.";
   }
@@ -219,24 +212,25 @@ module ietf-ospfv3-srv6 {
   }
 
   identity INTRA-AREA-LOCATOR {
-    base "LOCATOR-ROUTE-TYPE";
+    base LOCATOR-ROUTE-TYPE;
     description
       "Intra-Area";
   }
 
   identity INTER-AREA-LOCATOR {
-    base "LOCATOR-ROUTE-TYPE";
+    base LOCATOR-ROUTE-TYPE;
     description
       "Inter-Area";
   }
+
   identity AS-EXTERNAL-LOCATOR {
-    base "LOCATOR-ROUTE-TYPE";
+    base LOCATOR-ROUTE-TYPE;
     description
       "AS External";
   }
 
   identity NSSA-EXTERNAL-LOCATOR {
-    base "LOCATOR-ROUTE-TYPE";
+    base LOCATOR-ROUTE-TYPE;
     description
       "NSSA External";
   }
@@ -300,6 +294,7 @@ module ietf-ospfv3-srv6 {
   }
 
   /* typedef */
+
   typedef srv6-sid-value {
     type inet:ipv6-address-no-zone;
     description
@@ -307,6 +302,7 @@ module ietf-ospfv3-srv6 {
   }
 
   /* Features */
+
   feature srv6-ti-lfa {
     description
       "Enhance SRv6 FRR with ti-lfa
@@ -314,6 +310,7 @@ module ietf-ospfv3-srv6 {
   }
 
   /* Groupings */
+
   grouping srv6-capabilities {
     description
       "SRV6 capability grouping.";
@@ -372,7 +369,6 @@ module ietf-ospfv3-srv6 {
         description
           "SRv6 end sid flags.";
       }
-
       uses srv6-endpoint-func;
       leaf sid {
         type srv6-sid-value;
@@ -396,19 +392,16 @@ module ietf-ospfv3-srv6 {
         description
           "SRv6 SID Locator Block length in bits.";
       }
-
       leaf ln-length {
         type uint8;
         description
           "SRv6 SID Locator Node length in bits.";
       }
-
       leaf fun-length {
         type uint8;
         description
           "SRv6 SID Function length in bits.";
       }
-
       leaf arg-length {
         type uint8;
         description
@@ -420,14 +413,12 @@ module ietf-ospfv3-srv6 {
   grouping srv6-endx-sids {
     description
       "This group defines SRv6 SIDs Associated with Adjacencies
-      including SRv6 End.X SID Sub-TLV and SRv6 LAN End.X SID
-      Sub-TLV.";
+       including SRv6 End.X SID Sub-TLV and SRv6 LAN End.X SID
+       Sub-TLV.";
     container srv6-endx-sid {
       description
         "SRv6 sids associated with an adjacency.";
-
       uses srv6-endpoint-func;
-
       leaf-list func-flags {
         type identityref {
           base srv6-endx-sid-bit;
@@ -435,33 +426,28 @@ module ietf-ospfv3-srv6 {
         description
           "Flags for SRv6 end x SID.";
       }
-
       leaf algorithm {
         type uint8;
         description
           "Associated algorithm.";
       }
-
       leaf weight {
         type uint8;
         description
           "8 bit field whose value represents the weight of the End.X
            SID for the purpose of load balancing";
       }
-
       leaf-list sid {
         type srv6-sid-value;
         description
           "SRV6 sid value.";
       }
-
       leaf neighbor-router-id {
-         type yang:dotted-quad;
-         description
-           "Neighbor router ID.This is only
-            used on LAN adjacencies.";
+        type yang:dotted-quad;
+        description
+          "Neighbor router ID.This is only
+           used on LAN adjacencies.";
       }
-
       uses srv6-sid-structures;
     }
   }
@@ -479,20 +465,17 @@ module ietf-ospfv3-srv6 {
         description
           "The type of the locator route";
       }
-
       leaf algorithm {
         type uint8;
         description
           "Associated algorithm.";
       }
-
       leaf locator-length {
         type uint8;
         description
           "Carries the length of the Locator
            prefix as number of bits (1-128)";
       }
-
       leaf-list flags {
         type identityref {
           base ospfv3-e-lsa:ospfv3-e-prefix-option;
@@ -500,13 +483,11 @@ module ietf-ospfv3-srv6 {
         description
           "Flags for srv6 locator tlv.";
       }
-
       leaf metric {
         type uint32;
         description
           "Metric value.";
       }
-
       leaf-list locator {
         type inet:ipv6-address-no-zone;
         description
@@ -517,9 +498,10 @@ module ietf-ospfv3-srv6 {
   }
 
   /* Cfg */
-  augment "/rt:routing/" +
-          "rt:control-plane-protocols/rt:control-plane-protocol"+
-          "/ospf:ospf" {
+
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol"
+        + "/ospf:ospf" {
     when "../rt:type = 'ospf:ospfv3'" {
       description
         "This augment OSPFv3 routing protocol when used";
@@ -527,8 +509,8 @@ module ietf-ospfv3-srv6 {
     description
       "This augments OSPFv3 protocol configuration
        with SRv6.";
-    container srv6{
-      leaf enable{
+    container srv6 {
+      leaf enable {
         type boolean;
         default "false";
         description
@@ -553,7 +535,7 @@ module ietf-ospfv3-srv6 {
           "Enable OSPFv3 segment-routing IPv6 with specified
            locator.";
       }
-      leaf persistent-end-x-sid{
+      leaf persistent-end-x-sid {
         type boolean;
         default "false";
         description
@@ -562,7 +544,6 @@ module ietf-ospfv3-srv6 {
       description
         "Configuration about OSPFv3 segment-routing IPv6.";
     }
-
     container micro-loop-avoidance {
       leaf srv6-enable {
         type boolean;
@@ -570,7 +551,6 @@ module ietf-ospfv3-srv6 {
         description
           "Enable SRv6 avoid-microloop.Depend on SR IPv6 Enable.";
       }
-
       leaf srv6-rib-update-delay {
         type uint16 {
           range "1000..10000";
@@ -581,24 +561,22 @@ module ietf-ospfv3-srv6 {
           "Set the route delivery delay for SRv6 avoid-microloop.
            Depend on SR IPv6 Enable.";
       }
-
       description
         "Enable OSPFv3 avoid-microloop.";
     }
   }
 
-  augment "/rt:routing/" +
-          "rt:control-plane-protocols/rt:control-plane-protocol"+
-          "/ospf:ospf/ospf:fast-reroute"{
-    when "../../rt:type = 'ospf:ospfv3'"{
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol"
+        + "/ospf:ospf/ospf:fast-reroute" {
+    when "../../rt:type = 'ospf:ospfv3'" {
       description
         "This augment OSPFv3 routing protocol when used";
     }
     description
       "This augments OSPFv3 IP FRR with IPV6 TILFA.";
-
     container srv6-ti-lfa {
-      if-feature srv6-ti-lfa;
+      if-feature "srv6-ti-lfa";
       leaf enable {
         type boolean;
         description
@@ -610,12 +588,13 @@ module ietf-ospfv3-srv6 {
   }
 
   /* Database */
+
   augment "/rt:routing/"
-           + "rt:control-plane-protocols/rt:control-plane-protocol/"
-           + "ospf:ospf/ospf:database/"
-           + "ospf:as-scope-lsa-type/ospf:as-scope-lsas/"
-           + "ospf:as-scope-lsa/ospf:version/ospf:ospfv3/"
-           + "ospf:ospfv3/ospf:body" {
+        + "rt:control-plane-protocols/rt:control-plane-protocol/"
+        + "ospf:ospf/ospf:database/"
+        + "ospf:as-scope-lsa-type/ospf:as-scope-lsas/"
+        + "ospf:as-scope-lsa/ospf:version/ospf:ospfv3/"
+        + "ospf:ospfv3/ospf:body" {
     when "../../../../../../../rt:type = 'ospf:ospfv3'" {
       description
         "This augment OSPFv3 routing protocol when used";
@@ -630,11 +609,11 @@ module ietf-ospfv3-srv6 {
   }
 
   augment "/rt:routing/"
-           + "rt:control-plane-protocols/rt:control-plane-protocol/"
-           + "ospf:ospf/ospf:database/"
-           + "ospf:as-scope-lsa-type/ospf:as-scope-lsas/"
-           + "ospf:as-scope-lsa/ospf:version/ospf:ospfv3/"
-           + "ospf:ospfv3/ospf:body/ospf:router-information" {
+        + "rt:control-plane-protocols/rt:control-plane-protocol/"
+        + "ospf:ospf/ospf:database/"
+        + "ospf:as-scope-lsa-type/ospf:as-scope-lsas/"
+        + "ospf:as-scope-lsa/ospf:version/ospf:ospfv3/"
+        + "ospf:ospfv3/ospf:body/ospf:router-information" {
     when "../../../../../../../../rt:type = 'ospf:ospfv3'" {
       description
         "This augment OSPFv3 routing protocol when used";
@@ -654,7 +633,7 @@ module ietf-ospfv3-srv6 {
         + "ospfv3-e-lsa:e-router-tlvs/"
         + "ospfv3-e-lsa:link-tlv" {
     when "../../../../../../../../../../../../rt:type"
-         + "= 'ospf:ospfv3'" {
+       + "= 'ospf:ospfv3'" {
       description
         "This augment OSPFv3 routing protocol when used";
     }
