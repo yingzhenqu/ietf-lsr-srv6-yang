@@ -15,12 +15,12 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" docName="draft-ietf-lsr-isis-srv6-yang-04" ipr="trust200902" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" tocDepth="3" symRefs="true" sortRefs="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" docName="draft-ietf-lsr-isis-srv6-yang-05" ipr="trust200902" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" tocDepth="3" symRefs="true" sortRefs="true" version="3">
   <!-- xml2rfc v2v3 conversion 3.13.1 -->
   <front>
     <title abbrev="YANG Data Model for IS-IS SRv6">YANG Data Model for IS-IS
     SRv6</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-lsr-isis-srv6-yang-04"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-lsr-isis-srv6-yang-05"/>
     <author fullname="Zhibo Hu" initials="Z" surname="Hu">
       <organization>Huawei</organization>
       <address>
@@ -54,7 +54,7 @@
           <code>950950</code>
           <country>USA</country>
         </postal>
-        <email>yingzhen.qu@futurewei.com</email>
+        <email>yingzhen.ietf@gmail.com</email>
       </address>
     </author>
     <author fullname="Xuesong Geng" initials="X" surname="Geng">
@@ -260,7 +260,7 @@
     </section>
     <section numbered="true" toc="default">
       <name>IS-IS SRv6 YANG Module</name>
-      <sourcecode name="ietf-isis-srv6@2023-03-07.yang" type="yang" markers="true"><![CDATA[
+      <sourcecode name="ietf-isis-srv6@2024-02-28.yang" type="yang" markers="true"><![CDATA[
 module ietf-isis-srv6 {
   yang-version 1.1;
   namespace "urn:ietf:params:xml:ns:"
@@ -268,24 +268,21 @@ module ietf-isis-srv6 {
   prefix isis-srv6;
 
   import ietf-routing {
-    prefix "rt";
-    reference 
+    prefix rt;
+    reference
       "RFC8349: A YANG Data Model for
                 Routing Management (NMDA Version)";
   }
-
   import ietf-isis {
-    prefix "isis";
+    prefix isis;
     reference
       "RFC 9130: YANG Data Model for the IS-IS Protocol";
   }
-
   import ietf-inet-types {
-    prefix "inet";
+    prefix inet;
     reference
       "RFC 6991:Common YANG Data Types";
   }
-
   import ietf-segment-routing {
     prefix sr;
     reference
@@ -293,28 +290,27 @@ module ietf-isis-srv6 {
                  Routing";
   }
   import ietf-srv6-base {
-    prefix "srv6";
-    reference "draft-ietf-spring-srv6-yang: YANG Data
-               Model for SRv6 Base and Static";
-
+    prefix srv6;
+    reference
+      "draft-ietf-spring-srv6-yang: YANG Data
+       Model for SRv6 Base and Static";
   }
 
   organization
-   "IETF LSR Working Group";
-
+    "IETF LSR Working Group";
   contact
     "WG Web:   <http://datatracker.ietf.org/wg/lsr>
      WG List:  <mailto:lsr@ietf.org>
-    
+
      Author:    Zhibo Hu
                 <mailto:huzhibo@huawei.com>
      Author:    Dan Ye
                 <mailto:daye@cisco.com>
      Author:    Yingzhen Qu
-                <mailto:yingzhen.qu@futurewei.com>
+                <mailto:yingzhen.ietf@gmail.com>
      Author:    Qiufang Ma
                <mailto:maqiufang1@huawei.com>
-     ";
+    ";
   description
     "The YANG module defines the configuration and operatioanl state
      for IS-IS extension to support Segment Routing over IPv6 data
@@ -323,7 +319,7 @@ module ietf-isis-srv6 {
      This YANG model conforms to the Network Management
      Datastore Architecture (NDMA) as described in RFC 8342.
 
-     Copyright (c) 2023 IETF Trust and the persons identified as
+     Copyright (c) 2024 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
@@ -343,76 +339,76 @@ module ietf-isis-srv6 {
      described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
      they appear in all capitals, as shown here.";
 
-
-  revision 2023-09-07 {
+  revision 2024-02-28 {
     description
-        "Initial revision.";
-    reference 
+      "Initial revision.";
+    reference
       "RFC XXXX: YANG Data Model for IS-IS SRv6";
   }
 
   /* Identities */
+
   identity SRV6_END_FUNC_TYPE {
     description
       "Base identity type for srv6 endpoint function code points.";
   }
 
   identity SRV6_END_FUNC_PSP_USP_USD {
-    base "SRV6_END_FUNC_TYPE";
+    base SRV6_END_FUNC_TYPE;
     description
       "End (May support PSP, USP, USD).";
   }
 
   identity SRV6_END_X_FUNC_PSP_USP_USD {
-    base "SRV6_END_FUNC_TYPE";
+    base SRV6_END_FUNC_TYPE;
     description
       "End.X(May support PSP, USP, USD)";
   }
 
   identity SRV6_END_T_FUNC_PSP_USP_USD {
-    base "SRV6_END_FUNC_TYPE";
+    base SRV6_END_FUNC_TYPE;
     description
       "END (May support PSP, USP, USD)";
   }
 
   identity SRV6_END_FUNC_DX6 {
-    base "SRV6_END_FUNC_TYPE";
+    base SRV6_END_FUNC_TYPE;
     description
       "End.DX6.";
   }
 
   identity SRV6_END_FUNC_DX4 {
-    base "SRV6_END_FUNC_TYPE";
+    base SRV6_END_FUNC_TYPE;
     description
       "End.DX4.";
   }
 
   identity SRV6_END_FUNC_DT6 {
-    base "SRV6_END_FUNC_TYPE";
+    base SRV6_END_FUNC_TYPE;
     description
       "End.DT6.";
   }
 
   identity SRV6_END_FUNC_DT4 {
-    base "SRV6_END_FUNC_TYPE";
+    base SRV6_END_FUNC_TYPE;
     description
-    "End.DT4.";
+      "End.DT4.";
   }
 
   identity SRV6_END_FUNC_DT64 {
-    base "SRV6_END_FUNC_TYPE";
+    base SRV6_END_FUNC_TYPE;
     description
       "End.DT64.";
   }
 
   identity SRV6_END_FUNC_OP {
-    base "SRV6_END_FUNC_TYPE";
+    base SRV6_END_FUNC_TYPE;
     description
       "END.OP .";
   }
 
   identity SRV6_END_FUNC_OTP {
-    base "SRV6_END_FUNC_TYPE";
+    base SRV6_END_FUNC_TYPE;
     description
       "END.OTP .";
   }
@@ -480,6 +476,7 @@ module ietf-isis-srv6 {
   }
 
   /* typedef */
+
   typedef srv6-sid-value {
     type inet:ipv6-address-no-zone;
     description
@@ -487,12 +484,14 @@ module ietf-isis-srv6 {
   }
 
   /* Features */
+
   feature srv6-ti-lfa {
     description
-     "Enhance SRv6 FRR with ti-lfa support";
+      "Enhance SRv6 FRR with ti-lfa support";
   }
 
   /* Groupings */
+
   grouping srv6-sid-structures {
     description
       "This group defines SRv6 SID Structure sub-sub-TLV.";
@@ -505,19 +504,16 @@ module ietf-isis-srv6 {
         description
           "SRv6 SID Locator Block length in bits.";
       }
-
       leaf ln-length {
         type uint8;
         description
           "SRv6 SID Locator Node length in bits.";
       }
-
       leaf fun-length {
         type uint8;
         description
           "SRv6 SID Function length in bits.";
       }
-
       leaf arg-length {
         type uint8;
         description
@@ -525,9 +521,10 @@ module ietf-isis-srv6 {
       }
     }
   }
+
   grouping srv6-capability {
     description
-    "SRV6 capability grouping.";
+      "SRV6 capability grouping.";
     container v6-capability {
       description
         "SRv6 capability.";
@@ -542,7 +539,7 @@ module ietf-isis-srv6 {
   }
 
   grouping srv6-endpoint-func {
-     description
+    description
       "This group defines srv6 endpoint function";
     container endpoint-func {
       description
@@ -557,7 +554,7 @@ module ietf-isis-srv6 {
       }
       leaf endpoint-func {
         type identityref {
-         base isis-srv6:SRV6_END_FUNC_TYPE;
+          base isis-srv6:SRV6_END_FUNC_TYPE;
         }
         description
           "The endpoint function.";
@@ -572,7 +569,7 @@ module ietf-isis-srv6 {
 
   grouping srv6-end-sid {
     description
-    "SRv6 Segment Identifier(SID) with Endpoint functions.";
+      "SRv6 Segment Identifier(SID) with Endpoint functions.";
     leaf-list flags {
       type identityref {
         base srv6-end-sid-bit;
@@ -580,9 +577,7 @@ module ietf-isis-srv6 {
       description
         "SRv6 end sid flags.";
     }
-
     uses srv6-endpoint-func;
-
     leaf sid {
       type srv6-sid-value;
       description
@@ -591,6 +586,7 @@ module ietf-isis-srv6 {
     // sub-sub-tlvs
     uses srv6-sid-structures;
   }
+
   grouping srv6-locator {
     description
       "This group defines srv6 locator tlv.";
@@ -608,7 +604,6 @@ module ietf-isis-srv6 {
       description
         "Flags for SRv6 locator TLV.";
     }
-
     leaf metric {
       type uint32;
       description
@@ -617,9 +612,8 @@ module ietf-isis-srv6 {
     leaf algorithm {
       type uint8;
       description
-      "Associated algorithm.";
+        "Associated algorithm.";
     }
-
     leaf loc-size {
       type uint8;
       description
@@ -648,8 +642,7 @@ module ietf-isis-srv6 {
 
   grouping srv6-adjacency-sid {
     description
-    "SRv6 sid associated with an adjacency.";
-
+      "SRv6 sid associated with an adjacency.";
     leaf-list func-flags {
       type identityref {
         base srv6-endx-sid-bit;
@@ -657,28 +650,23 @@ module ietf-isis-srv6 {
       description
         "Flags for SRv6 end x SID.";
     }
-
     leaf algorithm {
       type uint8;
       description
         "Associated algorithm.";
     }
-
     leaf weight {
       type uint8;
       description
         "The value represents the weight of the End.X sid
          for the purpose of load balancing.";
     }
-
     uses srv6-endpoint-func;
-
     leaf sid {
       type srv6-sid-value;
       description
         "SRV6 sid value.";
     }
-
     leaf neighbor-id {
       type isis:system-id;
       description
@@ -692,9 +680,9 @@ module ietf-isis-srv6 {
 
   grouping srv6-adjacency-state {
     description
-     "This group will extend adjacency state.";
+      "This group will extend adjacency state.";
     list end-x-sid {
-      key value;
+      key "value";
       config false;
       leaf value {
         type srv6-sid-value;
@@ -725,15 +713,16 @@ module ietf-isis-srv6 {
           "Associated algorithm.";
       }
       uses srv6-endpoint-func;
-
       description
         "List of End.X Segment IDs.";
     }
   }
+
   /* Cfg */
-  augment "/rt:routing/" +
-          "rt:control-plane-protocols/rt:control-plane-protocol"+
-          "/isis:isis" {
+
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol"
+        + "/isis:isis" {
     when "derived-from-or-self(../rt:type, 'isis:isis')" {
       description
         "This augment ISIS routing protocol when used";
@@ -741,36 +730,32 @@ module ietf-isis-srv6 {
     description
       "This augments ISIS protocol configuration
        with SRv6.";
-
-    container srv6-cfg{
-      leaf enable{
+    container srv6-cfg {
+      leaf enable {
         type boolean;
         default "false";
         description
           "Enables SRv6 protocol extensions.";
       }
-
       leaf default-locator {
         type boolean;
         default "false";
         description
           "Enable ISIS segment-routing IPv6 with default Locator.";
       }
-
       leaf-list locator-name {
         when "../default-locator = 'false'" {
           description
             "Only applies to non default locator.";
         }
         type leafref {
-          path "/rt:routing/sr:segment-routing/srv6:srv6" +
-                "/srv6:locators/srv6:locator/srv6:name";
+          path "/rt:routing/sr:segment-routing/srv6:srv6"
+             + "/srv6:locators/srv6:locator/srv6:name";
         }
         description
           "Enable ISIS segment-routing IPv6 with specified Locator.";
       }
-
-      leaf persistent-end-x-sid{
+      leaf persistent-end-x-sid {
         type boolean;
         default "false";
         description
@@ -786,7 +771,6 @@ module ietf-isis-srv6 {
         description
           "Enable SRv6 avoid-microloop.Depend on SR IPv6 Enable.";
       }
-
       leaf srv6-rib-update-delay {
         type uint16 {
           range "1000..10000";
@@ -797,85 +781,61 @@ module ietf-isis-srv6 {
           "Set the route delivery delay for SRv6 avoid-microloop.
            Depend on SR IPv6 Enable.";
       }
-
       description
         "Enable IS-IS avoid-microloop.";
     }
   }
 
-  augment "/rt:routing/" +
-          "rt:control-plane-protocols/rt:control-plane-protocol"+
-          "/isis:isis/isis:fast-reroute"{
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol"
+        + "/isis:isis/isis:fast-reroute" {
     when "derived-from-or-self(../../rt:type, 'isis:isis')" {
       description
         "This augment ISIS routing protocol when used";
     }
     description
       "This augments ISIS IPFRR with IPV6 TILFA.";
-
     container srv6-ti-lfa {
-
-      if-feature srv6-ti-lfa;
+      if-feature "srv6-ti-lfa";
       leaf enable {
         type boolean;
         description
           "Enables SRv6 TI-LFA computation.";
       }
-
       description
         "SRv6 TILFA configuration.";
     }
   }
+
   /* Operational states */
-  augment "/rt:routing/" +
-        "rt:control-plane-protocols/rt:control-plane-protocol"+
-        "/isis:isis/isis:database/isis:levels/isis:lsp"+
-        "/isis:router-capabilities" {
-     when "derived-from-or-self(../../../../../rt:type, 'isis:isis')" {
+
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol"
+        + "/isis:isis/isis:database/isis:levels/isis:lsp"
+        + "/isis:router-capabilities" {
+    when "derived-from-or-self(../../../../../rt:type, 'isis:isis')" {
       description
         "This augment ISIS routing protocol when used";
     }
     description
       "This augments ISIS protocol router capability.";
-      uses srv6-capability;
-      uses srv6:srv6-msd-signaled;
+    uses srv6-capability;
+    uses srv6:srv6-msd-signaled;
   }
 
-  augment "/rt:routing/" +
-        "rt:control-plane-protocols/rt:control-plane-protocol"+
-        "/isis:isis/isis:database/isis:levels/isis:lsp"+
-        "/isis:extended-is-neighbor/isis:neighbor" {
-     when "derived-from-or-self(../../../../../../rt:type,"
-           + "'isis:isis')" {
-      description
-        "This augment ISIS routing protocol when used.";
-    }
-    description
-     "This augments ISIS protocol neighbor.";
-    container srv6-adjacency-sids {
-      description
-        "This defines svr6 end-x sids for the adjacency.";
-      list end-x-sid {
-        key "sid";
-        uses srv6-adjacency-sid;
-        description
-          "List of end-x sids.";
-      }
-    }
-  }
-  augment "/rt:routing/" +
-        "rt:control-plane-protocols/rt:control-plane-protocol"+
-        "/isis:isis/isis:database/isis:levels/isis:lsp"+
-        "/isis:mt-is-neighbor/isis:neighbor" {
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol"
+        + "/isis:isis/isis:database/isis:levels/isis:lsp"
+        + "/isis:extended-is-neighbor/isis:neighbor" {
     when "derived-from-or-self(../../../../../../rt:type,"
-           + "'isis:isis')" {
+       + "'isis:isis')" {
       description
         "This augment ISIS routing protocol when used.";
     }
     description
       "This augments ISIS protocol neighbor.";
     container srv6-adjacency-sids {
-       description
+      description
         "This defines svr6 end-x sids for the adjacency.";
       list end-x-sid {
         key "sid";
@@ -886,18 +846,41 @@ module ietf-isis-srv6 {
     }
   }
 
-  augment "/rt:routing/" +
-        "rt:control-plane-protocols/rt:control-plane-protocol"+
-        "/isis:isis/isis:database/isis:levels/isis:lsp" {
-    when "derived-from-or-self(../../../../rt:type, 'isis:isis')" {
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol"
+        + "/isis:isis/isis:database/isis:levels/isis:lsp"
+        + "/isis:mt-is-neighbor/isis:neighbor" {
+    when "derived-from-or-self(../../../../../../rt:type,"
+       + "'isis:isis')" {
       description
-      "This augment ISIS routing protocol when used.";
+        "This augment ISIS routing protocol when used.";
     }
     description
-     "This augments ISIS protocol LSDB.";
+      "This augments ISIS protocol neighbor.";
+    container srv6-adjacency-sids {
+      description
+        "This defines svr6 end-x sids for the adjacency.";
+      list end-x-sid {
+        key "sid";
+        uses srv6-adjacency-sid;
+        description
+          "List of end-x sids.";
+      }
+    }
+  }
+
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol"
+        + "/isis:isis/isis:database/isis:levels/isis:lsp" {
+    when "derived-from-or-self(../../../../rt:type, 'isis:isis')" {
+      description
+        "This augment ISIS routing protocol when used.";
+    }
+    description
+      "This augments ISIS protocol LSDB.";
     container srv6-locators {
       description
-         "This defines srv6 locator tlvs.";
+        "This defines srv6 locator tlvs.";
       list locator {
         key "locator";
         uses srv6-locator;
@@ -907,19 +890,19 @@ module ietf-isis-srv6 {
     }
   }
 
-  augment "/rt:routing/" +
-        "rt:control-plane-protocols/rt:control-plane-protocol"+
-        "/isis:isis/isis:interfaces/isis:interface" +
-        "/isis:adjacencies/isis:adjacency" {
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol"
+        + "/isis:isis/isis:interfaces/isis:interface"
+        + "/isis:adjacencies/isis:adjacency" {
     when "derived-from-or-self(../../../../../rt:type,"
-         + "'isis:isis')" {
+       + "'isis:isis')" {
       description
-      "This augment ISIS routing protocol when used.";
+        "This augment ISIS routing protocol when used.";
     }
     description
       "This augments ISIS protocol operational state
        with segment routing.";
-    uses  srv6-adjacency-state;
+    uses srv6-adjacency-state;
   }
 
   /* Notifications */
