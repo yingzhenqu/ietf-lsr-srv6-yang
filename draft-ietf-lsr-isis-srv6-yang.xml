@@ -15,12 +15,12 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" docName="draft-ietf-lsr-isis-srv6-yang-05" ipr="trust200902" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" tocDepth="3" symRefs="true" sortRefs="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" docName="draft-ietf-lsr-isis-srv6-yang-06" ipr="trust200902" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" tocDepth="3" symRefs="true" sortRefs="true" version="3">
   <!-- xml2rfc v2v3 conversion 3.13.1 -->
   <front>
     <title abbrev="YANG Data Model for IS-IS SRv6">YANG Data Model for IS-IS
     SRv6</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-lsr-isis-srv6-yang-05"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-lsr-isis-srv6-yang-06"/>
     <author fullname="Zhibo Hu" initials="Z" surname="Hu">
       <organization>Huawei</organization>
       <address>
@@ -49,9 +49,6 @@
       <organization>Futurewei Technologies</organization>
       <address>
         <postal>
-          <street>2330 Central Express Way</street>
-          <city>Santa Clara</city>
-          <code>950950</code>
           <country>USA</country>
         </postal>
         <email>yingzhen.ietf@gmail.com</email>
@@ -233,34 +230,36 @@
       <name>IS-IS SRv6 configuration</name>
       <section numbered="true" toc="default">
         <name>SRv6 activation</name>
-        <t>Activation of IS-IS SRv6 is done by setting the "enable" leaf to
-        true. This triggers advertisement of SRv6 extensions based on the
-        configuration parameters that have been setup using the base SRv6
-        module.</t>
+        <t>IS-IS SRv6 activation is achieved by setting the "enable" leaf
+          to true. This action triggers the advertisement of SRv6 extensions
+          according to the configuration parameters defined in the base
+          SRv6 module.
+        </t>
       </section>
       <section numbered="true" toc="default">
         <name>Locator setting</name>
-        <t>The basic SRv6 module defines the related locator leafs. When the
-        IS-IS SRv6 module is enabled, set the locator by using the following
-        strategy: firstly, it is reasonable to check whether the default
-        locator is used, if not, to use the specified locator. The strategy is
-        realized by adding the leaf "default-locator", "locator-name" .</t>
+        <t>The basic SRv6 module defines the relevant locator leaves.
+          When the IS-IS SRv6 module is enabled, set the locator using
+          the following approach: first, check if the default locator
+          is being used. If it is not, then use the specified locator.
+          This strategy is implemented by adding the "default-locator"
+          and "locator-name" leaves. .</t>
       </section>
       <section numbered="true" toc="default">
         <name>IP Fast reroute</name>
-        <t>IS-IS SRv6 model augments the fast-reroute container. It brings the
-        ability to activate ipv6 TI-LFA (topology independent LFA).</t>
+        <t>The IS-IS SRv6 model augments the fast-reroute container in the
+          IS-IS base module with a leaf that enables TI-LFA (Topology Independent LFA).</t>
       </section>
       <section numbered="true" toc="default">
         <name>Microloop avoidance</name>
-        <t>IS-IS SRv6 model augments the micro-loop-avoidance container, this
-        container including the leaf "srv6-enable" brings the ability to
-        activate SRv6 avoid-microloop.</t>
+        <t>The IS-IS SRv6 model augments the micro-loop-avoidance container. This
+        container includes the "srv6-enable" leaf, which activates SRv6
+        for microloop avoidance.</t>
       </section>
     </section>
     <section numbered="true" toc="default">
       <name>IS-IS SRv6 YANG Module</name>
-      <sourcecode name="ietf-isis-srv6@2024-02-28.yang" type="yang" markers="true"><![CDATA[
+      <sourcecode name="ietf-isis-srv6@2024-09-01.yang" type="yang" markers="true"><![CDATA[
 module ietf-isis-srv6 {
   yang-version 1.1;
   namespace "urn:ietf:params:xml:ns:"
@@ -312,7 +311,7 @@ module ietf-isis-srv6 {
                <mailto:maqiufang1@huawei.com>
     ";
   description
-    "The YANG module defines the configuration and operatioanl state
+    "The YANG module defines the configuration and operational state
      for IS-IS extension to support Segment Routing over IPv6 data
      plane.
 
@@ -339,7 +338,7 @@ module ietf-isis-srv6 {
      described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
      they appear in all capitals, as shown here.";
 
-  revision 2024-02-28 {
+  revision 2024-09-01 {
     description
       "Initial revision.";
     reference
@@ -725,10 +724,10 @@ module ietf-isis-srv6 {
         + "/isis:isis" {
     when "derived-from-or-self(../rt:type, 'isis:isis')" {
       description
-        "This augment ISIS routing protocol when used";
+        "This augment IS-IS routing protocol when used";
     }
     description
-      "This augments ISIS protocol configuration
+      "This augments IS-IS protocol configuration
        with SRv6.";
     container srv6-cfg {
       leaf enable {
@@ -741,7 +740,7 @@ module ietf-isis-srv6 {
         type boolean;
         default "false";
         description
-          "Enable ISIS segment-routing IPv6 with default Locator.";
+          "Enable IS-IS segment-routing IPv6 with default Locator.";
       }
       leaf-list locator-name {
         when "../default-locator = 'false'" {
@@ -753,7 +752,7 @@ module ietf-isis-srv6 {
              + "/srv6:locators/srv6:locator/srv6:name";
         }
         description
-          "Enable ISIS segment-routing IPv6 with specified Locator.";
+          "Enable IS-IS segment-routing IPv6 with specified Locator.";
       }
       leaf persistent-end-x-sid {
         type boolean;
@@ -762,7 +761,7 @@ module ietf-isis-srv6 {
           "Enable the persistent nature of End.X sid";
       }
       description
-        "Configuration about ISIS segment-routing IPv6.";
+        "Configuration about IS-IS segment-routing IPv6.";
     }
     container micro-loop-avoidance {
       leaf srv6-enable {
@@ -791,10 +790,10 @@ module ietf-isis-srv6 {
         + "/isis:isis/isis:fast-reroute" {
     when "derived-from-or-self(../../rt:type, 'isis:isis')" {
       description
-        "This augment ISIS routing protocol when used";
+        "This augment IS-IS routing protocol when used";
     }
     description
-      "This augments ISIS IPFRR with IPV6 TILFA.";
+      "This augments IS-IS IPFRR with IPV6 TILFA.";
     container srv6-ti-lfa {
       if-feature "srv6-ti-lfa";
       leaf enable {
@@ -803,7 +802,7 @@ module ietf-isis-srv6 {
           "Enables SRv6 TI-LFA computation.";
       }
       description
-        "SRv6 TILFA configuration.";
+        "SRv6 TI-LFA configuration.";
     }
   }
 
@@ -815,10 +814,10 @@ module ietf-isis-srv6 {
         + "/isis:router-capabilities" {
     when "derived-from-or-self(../../../../../rt:type, 'isis:isis')" {
       description
-        "This augment ISIS routing protocol when used";
+        "This augment IS-IS routing protocol when used";
     }
     description
-      "This augments ISIS protocol router capability.";
+      "This augments IS-IS protocol router capability.";
     uses srv6-capability;
     uses srv6:srv6-msd-signaled;
   }
@@ -830,10 +829,10 @@ module ietf-isis-srv6 {
     when "derived-from-or-self(../../../../../../rt:type,"
        + "'isis:isis')" {
       description
-        "This augment ISIS routing protocol when used.";
+        "This augment IS-IS routing protocol when used.";
     }
     description
-      "This augments ISIS protocol neighbor.";
+      "This augments IS-IS protocol neighbor.";
     container srv6-adjacency-sids {
       description
         "This defines svr6 end-x sids for the adjacency.";
@@ -853,10 +852,10 @@ module ietf-isis-srv6 {
     when "derived-from-or-self(../../../../../../rt:type,"
        + "'isis:isis')" {
       description
-        "This augment ISIS routing protocol when used.";
+        "This augment IS-IS routing protocol when used.";
     }
     description
-      "This augments ISIS protocol neighbor.";
+      "This augments IS-IS protocol neighbor.";
     container srv6-adjacency-sids {
       description
         "This defines svr6 end-x sids for the adjacency.";
@@ -874,10 +873,10 @@ module ietf-isis-srv6 {
         + "/isis:isis/isis:database/isis:levels/isis:lsp" {
     when "derived-from-or-self(../../../../rt:type, 'isis:isis')" {
       description
-        "This augment ISIS routing protocol when used.";
+        "This augment IS-IS routing protocol when used.";
     }
     description
-      "This augments ISIS protocol LSDB.";
+      "This augments IS-IS protocol LSDB.";
     container srv6-locators {
       description
         "This defines srv6 locator tlvs.";
@@ -897,10 +896,10 @@ module ietf-isis-srv6 {
     when "derived-from-or-self(../../../../../rt:type,"
        + "'isis:isis')" {
       description
-        "This augment ISIS routing protocol when used.";
+        "This augment IS-IS routing protocol when used.";
     }
     description
-      "This augments ISIS protocol operational state
+      "This augments IS-IS protocol operational state
        with segment routing.";
     uses srv6-adjacency-state;
   }
