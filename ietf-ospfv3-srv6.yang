@@ -17,6 +17,9 @@ module ietf-ospfv3-srv6 {
   }
   import ietf-ospfv3-extended-lsa {
     prefix ospfv3-e-lsa;
+    reference
+      "RFC 9587: YANG Data Model for OSPFv3 Extended Link State
+                 Advertisements (LSAs)";
   }
   import ietf-ospf {
     prefix ospf;
@@ -55,7 +58,7 @@ module ietf-ospfv3-srv6 {
                 <mailto:acee.ietf@gmail.com>
     ";
   description
-    "The YANG module defines the configuration and operatioanl state
+    "The YANG module defines the configuration and operational state
      for OSPFv3 extensions to support Segment Routing over IPv6 data
      plane.
 
@@ -82,7 +85,7 @@ module ietf-ospfv3-srv6 {
      described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
      they appear in all capitals, as shown here.";
 
-  revision 2024-03-03 {
+  revision 2024-09-02 {
     description
       "Initial revision.";
     reference

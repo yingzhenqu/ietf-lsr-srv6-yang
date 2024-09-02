@@ -15,12 +15,12 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" docName="draft-ietf-lsr-ospf-srv6-yang-05" ipr="trust200902" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" tocDepth="3" symRefs="true" sortRefs="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" docName="draft-ietf-lsr-ospf-srv6-yang-06" ipr="trust200902" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" tocDepth="3" symRefs="true" sortRefs="true" version="3">
   <!-- xml2rfc v2v3 conversion 3.13.1 -->
   <front>
     <title abbrev="YANG Data Model for OSPF SRv6">YANG Data Model for OSPF
     SRv6</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-lsr-ospf-srv6-yang-05"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-lsr-ospf-srv6-yang-06"/>
     <author fullname="Zhibo Hu" initials="Z" surname="Hu">
       <organization>Huawei Technologies</organization>
       <address>
@@ -61,9 +61,6 @@
       <organization>Futurewei Technologies</organization>
       <address>
         <postal>
-          <street>2330 Central Express Way</street>
-          <city>Santa Clara</city>
-          <code>950950</code>
           <country>USA</country>
         </postal>
         <email>yingzhen.ietf@gmail.com</email>
@@ -105,7 +102,7 @@
       YANG data models can be used as the basis for implementation of other
       interfaces, such as CLI and programmatic APIs.</t>
       <t>This document defines a YANG data model that can be used to configure
-      and manage OSPFv3 SRv6 <xref target="I-D.ietf-lsr-ospfv3-srv6-extensions" format="default"/>
+      and manage OSPFv3 SRv6 <xref target="RFC9513"/>
       and it is an augmentation to the OSPF YANG data model  <xref target="RFC9129" format="default"/> .</t>
     </section>
     <section numbered="true" toc="default">
@@ -157,8 +154,7 @@
           <artwork name="" type="" align="left" alt=""><![CDATA[+------------+-----------------------------+-----------------------+
 | Prefix     |YANG Module                  |  Reference            |
 +------------+-----------------------------+-----------------------+
-|ospfv3-e-lsa| ietf-ospfv3-extended-lsa    | I-D.ietf-lsr-ospfv3   |
-|            |                             | -extended-lsa-yang    |
+|ospfv3-e-lsa| ietf-ospfv3-extended-lsa    | [RFC9587]             |
 |            |                             |                       |
 | ospf       | ietf-ospf                   | [RFC9129]             |
 |            |                             |                       |
@@ -179,10 +175,10 @@
     </section>
     <section numbered="true" toc="default">
       <name>OSPFv3 SRv6 Configuration</name>
-      <t>This document defines a model for OSPFv3 SRv6 feature. It is an
+      <t>This document defines a YANG data model for OSPFv3 SRv6 feature. It is an
       augmentation of the OSPF base model.</t>
       <t>The OSPFv3 SRv6 YANG module requires support of OSPF base model <xref target="RFC9129" format="default"/> which defines basic OSPF configuration and
-      state and support of OSPFv3 Extended LSAs model <xref target="I-D.ietf-lsr-ospfv3-extended-lsa-yang" format="default"/>.</t>
+      state and support of OSPFv3 Extended LSAs model <xref target="RFC9587" format="default"/>.</t>
       <section numbered="true" toc="default">
         <name>SRv6 Activation</name>
         <t>Activation of OSPFv3 SRv6 is done by setting the "enable" leaf to
@@ -200,17 +196,15 @@
       </section>
       <section numbered="true" toc="default">
         <name>IP Fast Reroute</name>
-        <t>Additional data object (in the OSPFv3 SRv6 model ) for fast reroute
-        [RFC5286] is introduced by augmenting the fast-reroute container of
-        the OSPF module. It brings the ability to activate ipv6 TI-LFA
-        (topology independent LFA)
-        [I-D.ietf-rtgwg-segment-routing-ti-lfa].</t>
+        <t>The OSPFv3 SRv6 model augments the fast-reroute container in the OSPF
+          base module with a leaf that enables TI-LFA (Topology Independent
+          LFA) <xref target="I-D.ietf-rtgwg-segment-routing-ti-lfa"/>.</t>
       </section>
       <section numbered="true" toc="default">
         <name>Micro-loop Avoidance</name>
         <t>OSPFv3 SRv6 model augments OSPF module with the
-        micro-loop-avoidance container, this container including the leaf
-        "srv6-enable" brings the ability to activate SRv6 avoid-microloop.</t>
+        micro-loop-avoidance container. This container includes the
+        "srv6-enable" leaf, which activates SRv6 for microloop avoidance.</t>
       </section>
     </section>
     <section numbered="true" toc="default">
@@ -302,7 +296,7 @@
       </section>
       <section numbered="true" toc="default">
         <name>OSPFv3 SRv6 YANG Module</name>
-        <sourcecode name="ietf-ospfv3-srv6@2024-03-03.yang" type="" markers="true"><![CDATA[
+        <sourcecode name="ietf-ospfv3-srv6@2024-09-02.yang" type="" markers="true"><![CDATA[
 module ietf-ospfv3-srv6 {
   yang-version 1.1;
   namespace "urn:ietf:params:xml:ns:"
@@ -322,6 +316,9 @@ module ietf-ospfv3-srv6 {
   }
   import ietf-ospfv3-extended-lsa {
     prefix ospfv3-e-lsa;
+    reference
+      "RFC 9587: YANG Data Model for OSPFv3 Extended Link State
+                 Advertisements (LSAs)";
   }
   import ietf-ospf {
     prefix ospf;
@@ -360,7 +357,7 @@ module ietf-ospfv3-srv6 {
                 <mailto:acee.ietf@gmail.com>
     ";
   description
-    "The YANG module defines the configuration and operatioanl state
+    "The YANG module defines the configuration and operational state
      for OSPFv3 extensions to support Segment Routing over IPv6 data
      plane.
 
@@ -387,7 +384,7 @@ module ietf-ospfv3-srv6 {
      described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
      they appear in all capitals, as shown here.";
 
-  revision 2024-03-03 {
+  revision 2024-09-02 {
     description
       "Initial revision.";
     reference
@@ -1026,9 +1023,9 @@ module ietf-ospfv3-srv6 {
   <back>
     <references>
       <name>Normative References</name>
-      <reference anchor="I-D.ietf-lsr-ospfv3-srv6-extensions" target="https://www.ietf.org/archive/id/draft-ietf-lsr-ospfv3-srv6-extensions-15.txt" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-lsr-ospfv3-srv6-extensions.xml">
+      <reference anchor="RFC9513" target="https://www.rfc-editor.org/info/rfc9513" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9513.xml">
         <front>
-          <title>OSPFv3 Extensions for SRv6</title>
+          <title>OSPFv3 Extensions for Segment Routing over IPv6 (SRv6)</title>
           <author fullname="Zhenbin Li">
             <organization>Huawei Technologies</organization>
           </author>
@@ -1043,10 +1040,14 @@ module ietf-ospfv3-srv6 {
           </author>
           <date day="14" month="September" year="2022"/>
           <abstract>
-            <t>The Segment Routing (SR) architecture allows a flexible definition of the end-to-end path by encoding it as a sequence of topological elements called "segments". It can be implemented over an MPLS or IPv6 data plane. This document describes the OSPFv3 extensions required to support Segment Routing over the IPv6 data plane (SRv6).</t>
+            <t>The Segment Routing (SR) architecture allows a flexible definition of
+   the end-to-end path by encoding it as a sequence of topological
+   elements called segments.  It can be implemented over an MPLS or IPv6
+   data plane.  This document describes the OSPFv3 extensions required
+   to support SR over the IPv6 data plane.</t>
           </abstract>
         </front>
-        <seriesInfo name="Internet-Draft" value="draft-ietf-lsr-ospfv3-srv6-extensions-15"/>
+        <seriesInfo name="RFC" value="9513"/>
       </reference>
       <reference anchor="I-D.ietf-rtgwg-segment-routing-ti-lfa" target="https://www.ietf.org/archive/id/draft-ietf-rtgwg-segment-routing-ti-lfa-08.txt" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-rtgwg-segment-routing-ti-lfa.xml">
         <front>
@@ -1119,24 +1120,28 @@ module ietf-ospfv3-srv6 {
         </front>
         <seriesInfo name="Internet-Draft" value="draft-ietf-spring-srv6-yang-02"/>
       </reference>
-      <reference anchor="I-D.ietf-lsr-ospfv3-extended-lsa-yang" target="https://www.ietf.org/archive/id/draft-ietf-lsr-ospfv3-extended-lsa-yang-12.txt" xml:base="https://bib.ietf.org/public/rfc/bibxml-ids/reference.I-D.ietf-lsr-ospfv3-extended-lsa-yang.xml">
+      <reference anchor="RFC9587" target="https://www.rfc-editor.org/info/rfc9587" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9587.xml">
         <front>
-          <title>YANG Model for OSPFv3 Extended LSAs</title>
+          <title>YANG Data Model for OSPFv3 Extended Link State Advertisements (LSAs)</title>
           <author fullname="Acee Lindem">
-            <organization>Cisco Systems</organization>
+            <organization>LabN Consulting, L.L.C.</organization>
           </author>
           <author fullname="Sharmila Palani">
             <organization>Microsoft</organization>
           </author>
           <author fullname="Yingzhen Qu">
-            <organization>Futurewei</organization>
+            <organization>Futurewei Technologies</organization>
           </author>
           <date day="30" month="August" year="2022"/>
           <abstract>
-            <t>This document defines a YANG data model augmenting the IETF OSPF YANG model to provide support for OSPFv3 Link State Advertisement (LSA) Extensibility as defined in RFC 8362. OSPFv3 Extended LSAs provide extensible TLV-based LSAs for the base LSA types defined in RFC 5340.</t>
+            <t>This document defines a YANG data model augmenting the IETF OSPF YANG
+   data model (RFC 9129) to provide support for OSPFv3 Link State
+   Advertisement (LSA) Extensibility as defined in RFC 8362.  OSPFv3
+   Extended LSAs provide extensible TLV-based LSAs for the base LSA
+   types defined in RFC 5340.</t>
           </abstract>
         </front>
-        <seriesInfo name="Internet-Draft" value="draft-ietf-lsr-ospfv3-extended-lsa-yang-12"/>
+        <seriesInfo name="RFC" value="9587"/>
       </reference>
       <reference anchor="RFC2119" target="https://www.rfc-editor.org/info/rfc2119" xml:base="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml">
         <front>
