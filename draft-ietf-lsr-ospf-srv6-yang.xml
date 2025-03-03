@@ -15,12 +15,21 @@
 <?rfc inline="yes"?>
 <?rfc compact="yes"?>
 <?rfc subcompact="no"?>
-<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" docName="draft-ietf-lsr-ospf-srv6-yang-06" ipr="trust200902" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" tocDepth="3" symRefs="true" sortRefs="true" version="3">
+<rfc xmlns:xi="http://www.w3.org/2001/XInclude" category="std" docName="draft-ietf-lsr-ospf-srv6-yang-07" ipr="trust200902" obsoletes="" updates="" submissionType="IETF" xml:lang="en" tocInclude="true" tocDepth="3" symRefs="true" sortRefs="true" version="3">
   <!-- xml2rfc v2v3 conversion 3.13.1 -->
   <front>
     <title abbrev="YANG Data Model for OSPF SRv6">YANG Data Model for OSPF
     SRv6</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-lsr-ospf-srv6-yang-06"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-lsr-ospf-srv6-yang-07"/>
+        <author fullname="Yingzhen Qu" initials="Y" surname="Qu">
+      <organization>Futurewei Technologies</organization>
+      <address>
+        <postal>
+          <country>USA</country>
+        </postal>
+        <email>yingzhen.ietf@gmail.com</email>
+      </address>
+    </author>
     <author fullname="Zhibo Hu" initials="Z" surname="Hu">
       <organization>Huawei Technologies</organization>
       <address>
@@ -55,15 +64,6 @@
           <country/>
         </postal>
         <email>skraza@cisco.com</email>
-      </address>
-    </author>
-    <author fullname="Yingzhen Qu" initials="Y" surname="Qu">
-      <organization>Futurewei Technologies</organization>
-      <address>
-        <postal>
-          <country>USA</country>
-        </postal>
-        <email>yingzhen.ietf@gmail.com</email>
       </address>
     </author>
     <author fullname="Acee Lindem" initials="A" surname="Lindem">
@@ -231,72 +231,150 @@
      +--rw srv6-ti-lfa {srv6-ti-lfa}?
         +--rw enable?   boolean
   augment /rt:routing/rt:control-plane-protocols
-          /rt:control-plane-protocol/ospf:ospf
-          /ospf:database/ospf:as-scope-lsa-type
-          /ospf:as-scope-lsas/ospf:as-scope-lsa
-          /ospf:version/ospf:ospfv3
+          /rt:control-plane-protocol/ospf:ospf/ospf:areas
+          /ospf:area/ospf:interfaces/ospf:interface/ospf:database
+          /ospf:link-scope-lsa-type/ospf:link-scope-lsas
+          /ospf:link-scope-lsa/ospf:version/ospf:ospfv3
           /ospf:ospfv3/ospf:body:
-     +--ro srv6-locator
-        +--ro srv6-locactor-tlv
-           +--ro route-type?       identityref
-           +--ro algorithm?        uint8
-           +--ro locator-length?   uint8
-           +--ro flags*            identityref
-           +--ro metric?           uint32
-           +--ro locator*          inet:ipv6-address-no-zone
-           +--ro srv6-end-sid
-              +--ro flags*                identityref
-              +--ro endpoint-func
-              |  +--ro flags*                     identityref
-              |  +--ro endpoint-func?             identityref
-              |  +--ro undefined-endpoint-func?   uint16
-              +--ro sid?                  srv6-sid-value
-              +--ro srv6-sid-structure
-                 +--ro lb-length?    uint8
-                 +--ro ln-length?    uint8
-                 +--ro fun-length?   uint8
-                 +--ro arg-length?   uint8
-  augment /rt:routing
-          /rt:control-plane-protocols/rt:control-plane-protocol
-          /ospf:ospf/ospf:database
+    +--ro srv6-localtor-lsas
+       +--ro srv6-locator-lsa* []
+          +--ro link-state-id?     uint32
+          +--ro adv-router?        rt-types:router-id
+          +--ro sr6-locator-tlv* []
+             +--ro srv6-locactor-tlvs
+             |  +--ro route-type?       identityref
+             |  +--ro algorithm?        uint8
+             |  +--ro locator-length?   uint8
+             |  +--ro flags*            identityref
+             |  +--ro metric?           uint32
+             |  +--ro locator*          inet:ipv6-address-no-zone
+             |  +--ro srv6-end-sid
+             |     +--ro flags*                identityref
+             |     +--ro endpoint-func
+             |     |  +--ro flags*                     identityref
+             |     |  +--ro endpoint-func?             identityref
+             |     |  +--ro undefined-endpoint-func?   uint16
+             |     +--ro sid?                  srv6-sid-value
+             |     +--ro srv6-sid-structure
+             |        +--ro lb-length?    uint8
+             |        +--ro ln-length?    uint8
+             |        +--ro fun-length?   uint8
+             |        +--ro arg-length?   uint8
+             +--ro unknown-tlv
+                +--ro type?     uint16
+                +--ro length?   uint16
+                +--ro value?    yang:hex-string
+  augment /rt:routing/rt:control-plane-protocols
+          /rt:control-plane-protocol/ospf:ospf/ospf:areas
+          /ospf:area/ospf:database/ospf:area-scope-lsa-type
+          /ospf:area-scope-lsas/ospf:area-scope-lsa/ospf:version
+          /ospf:ospfv3/ospf:ospfv3/ospf:body:
+    +--ro srv6-localtor-lsas
+       +--ro srv6-locator-lsa* []
+          +--ro link-state-id?     uint32
+          +--ro adv-router?        rt-types:router-id
+          +--ro sr6-locator-tlv* []
+             +--ro srv6-locactor-tlvs
+             |  +--ro route-type?       identityref
+             |  +--ro algorithm?        uint8
+             |  +--ro locator-length?   uint8
+             |  +--ro flags*            identityref
+             |  +--ro metric?           uint32
+             |  +--ro locator*          inet:ipv6-address-no-zone
+             |  +--ro srv6-end-sid
+             |     +--ro flags*                identityref
+             |     +--ro endpoint-func
+             |     |  +--ro flags*                     identityref
+             |     |  +--ro endpoint-func?             identityref
+             |     |  +--ro undefined-endpoint-func?   uint16
+             |     +--ro sid?                  srv6-sid-value
+             |     +--ro srv6-sid-structure
+             |        +--ro lb-length?    uint8
+             |        +--ro ln-length?    uint8
+             |        +--ro fun-length?   uint8
+             |        +--ro arg-length?   uint8
+             +--ro unknown-tlv
+                +--ro type?     uint16
+                +--ro length?   uint16
+                +--ro value?    yang:hex-string
+  augment /rt:routing/rt:control-plane-protocols
+          /rt:control-plane-protocol/ospf:ospf/ospf:database
           /ospf:as-scope-lsa-type/ospf:as-scope-lsas
           /ospf:as-scope-lsa/ospf:version/ospf:ospfv3
-          /ospf:ospfv3/ospf:body/ospf:router-information:
-     +--ro srv6-capability
-     |  +--ro flags*   identityref
-     +--ro msd
-        +--ro max-sl?        uint8
-        +--ro max-end-pop?   uint8
-        +--ro max-h_encap?   uint8
-        +--ro max-end_d?     uint8
+          /ospf:ospfv3/ospf:body:
+    +--ro srv6-localtor-lsas
+       +--ro srv6-locator-lsa* []
+          +--ro link-state-id?     uint32
+          +--ro adv-router?        rt-types:router-id
+          +--ro sr6-locator-tlv* []
+             +--ro srv6-locactor-tlvs
+             |  +--ro route-type?       identityref
+             |  +--ro algorithm?        uint8
+             |  +--ro locator-length?   uint8
+             |  +--ro flags*            identityref
+             |  +--ro metric?           uint32
+             |  +--ro locator*          inet:ipv6-address-no-zone
+             |  +--ro srv6-end-sid
+             |     +--ro flags*                identityref
+             |     +--ro endpoint-func
+             |     |  +--ro flags*                     identityref
+             |     |  +--ro endpoint-func?             identityref
+             |     |  +--ro undefined-endpoint-func?   uint16
+             |     +--ro sid?                  srv6-sid-value
+             |     +--ro srv6-sid-structure
+             |        +--ro lb-length?    uint8
+             |        +--ro ln-length?    uint8
+             |        +--ro fun-length?   uint8
+             |        +--ro arg-length?   uint8
+             +--ro unknown-tlv
+                +--ro type?     uint16
+                +--ro length?   uint16
+                +--ro value?    yang:hex-string
   augment /rt:routing/rt:control-plane-protocols
-          /rt:control-plane-protocol/ospf:ospf/ospf:areas/ospf:area
-          /ospf:database/ospf:area-scope-lsa-type/ospf:area-scope-lsas
-          /ospf:area-scope-lsa/ospf:version/ospf:ospfv3
-          /ospf:ospfv3/ospf:body/ospfv3-e-lsa:e-router
-          /ospfv3-e-lsa:e-router-tlvs
-          /ospfv3-e-lsa:link-tlv:
-     +--ro srv6-endx-sid
-        +--ro endpoint-func
-        |  +--ro flags?                     identityref
-        |  +--ro endpoint-func?             identityref
-        |  +--ro undefined-endpoint-func?   uint16
-        +--ro flags?                identityref
-        +--ro algorithm?            uint8
-        +--ro weight?               uint8
-        +--ro sid*                  srv6-sid-value
-        +--ro neighbor-router-id?   yang:dotted-quad
-        +--ro srv6-sid-structure
-           +--ro lb-length?    uint8
-           +--ro ln-length?    uint8
-           +--ro fun-length?   uint8
-           +--ro arg-length?   uint8
+          /rt:control-plane-protocol/ospf:ospf/ospf:database
+          /ospf:as-scope-lsa-type/ospf:as-scope-lsas
+          /ospf:as-scope-lsa/ospf:version/ospf:ospfv3/ospf:ospfv3
+          /ospf:body/ospf:router-information:
+    +--ro srv6-capability
+    |  +--ro flags*   identityref
+    +--ro msd
+       +--ro max-sl?        uint8
+       +--ro max-end-pop?   uint8
+       +--ro max-h_encap?   uint8
+       +--ro max-end_d?     uint8
+  augment /rt:routing/rt:control-plane-protocols
+          /rt:control-plane-protocol/ospf:ospf/ospf:areas
+          /ospf:area/ospf:database/ospf:area-scope-lsa-type
+          /ospf:area-scope-lsas/ospf:area-scope-lsa/ospf:version
+          /ospf:ospfv3/ospf:ospfv3/ospf:body/ospfv3-e-lsa:e-router
+          /ospfv3-e-lsa:e-router-tlvs/ospfv3-e-lsa:link-tlv:
+    +--ro srv6-endx-sid
+    |  +--ro endpoint-func
+    |  |  +--ro flags*                     identityref
+    |  |  +--ro endpoint-func?             identityref
+    |  |  +--ro undefined-endpoint-func?   uint16
+    |  +--ro func-flags*           identityref
+    |  +--ro algorithm?            uint8
+    |  +--ro weight?               uint8
+    |  +--ro sid*                  srv6-sid-value
+    |  +--ro neighbor-router-id?   yang:dotted-quad
+    |  +--ro srv6-sid-structure
+    |     +--ro lb-length?    uint8
+    |     +--ro ln-length?    uint8
+    |     +--ro fun-length?   uint8
+    |     +--ro arg-length?   uint8
+    +--ro msd
+       +--ro max-sl?        uint8
+       +--ro max-end-pop?   uint8
+       +--ro max-h_encap?   uint8
+       +--ro max-end_d?     uint8
+
 
 ]]></artwork>
       </section>
       <section numbered="true" toc="default">
         <name>OSPFv3 SRv6 YANG Module</name>
-        <sourcecode name="ietf-ospfv3-srv6@2024-09-02.yang" type="" markers="true"><![CDATA[
+        <sourcecode name="ietf-ospfv3-srv6@2025-03-01.yang" type="" markers="true"><![CDATA[
 module ietf-ospfv3-srv6 {
   yang-version 1.1;
   namespace "urn:ietf:params:xml:ns:"
@@ -307,6 +385,11 @@ module ietf-ospfv3-srv6 {
     prefix yang;
     reference
       "RFC 6991: Common YANG Data Types";
+  }
+  import ietf-routing-types {
+    prefix rt-types;
+    reference
+      "RFC 8294: Common YANG Data Types for the Routing Area";
   }
   import ietf-routing {
     prefix rt;
@@ -345,26 +428,26 @@ module ietf-ospfv3-srv6 {
     "WG Web:   <https://datatracker.ietf.org/group/lsr/>
      WG List:  <mailto:lsr@ietf.org>
 
+     Author:    Yingzhen Qu
+                <mailto:yingzhen.ietf@gmail.com>
      Author:    Zhibo Hu
                 <mailto:huzhibo@huawei.com>
      Author:    Xuesong Geng
                 <mailto:gengxuesong@huawei.com>
      Author:    Kamran Raza
                 <mailto:skraza@cisco.com>
-     Author:    Yingzhen Qu
-                <mailto:yingzhen.ietf@gmail.com>
      Author:    Acee Lindem
                 <mailto:acee.ietf@gmail.com>
     ";
   description
     "The YANG module defines the configuration and operational state
      for OSPFv3 extensions to support Segment Routing over IPv6 data
-     plane.
+     plane as defined in RFC9513.
 
      This YANG model conforms to the Network Management
      Datastore Architecture (NDMA) as described in RFC 8342.
 
-     Copyright (c) 2024 IETF Trust and the persons identified as
+     Copyright (c) 2025 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
@@ -384,7 +467,7 @@ module ietf-ospfv3-srv6 {
      described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
      they appear in all capitals, as shown here.";
 
-  revision 2024-09-02 {
+  revision 2025-03-01 {
     description
       "Initial revision.";
     reference
@@ -754,48 +837,75 @@ module ietf-ospfv3-srv6 {
     }
   }
 
-  grouping srv6-locactor-tlvs {
+  grouping srv6-locator-lsas {
     description
-      "This group defines srv6 locator tlv.";
-    container srv6-locactor-tlv {
+      "Grouping for SRv6 locator lsas.";
+    container srv6-localtor-lsas {
       description
-        "This contains a SRv6 locator tlv.";
-      leaf route-type {
-        type identityref {
-          base LOCATOR-ROUTE-TYPE;
+        "SRv6 locator lsas.";
+      list srv6-locator-lsa {
+        description
+          "List of SRv6 locator lsa.";
+        leaf link-state-id {
+          type uint32;
+          description
+            "Link State ID.";
         }
-        description
-          "The type of the locator route";
-      }
-      leaf algorithm {
-        type uint8;
-        description
-          "Associated algorithm.";
-      }
-      leaf locator-length {
-        type uint8;
-        description
-          "Carries the length of the Locator
-           prefix as number of bits (1-128)";
-      }
-      leaf-list flags {
-        type identityref {
-          base ospfv3-e-lsa:ospfv3-e-prefix-option;
+        leaf adv-router {
+          type rt-types:router-id;
+          description
+            "Advertising router id.";
         }
-        description
-          "Flags for srv6 locator tlv.";
+        list sr6-locator-tlv {
+          description
+            "List of tlvs in SRv6 locator lsa.";
+          container srv6-locactor-tlvs {
+            description
+              "This contains a SRv6 locator tlv.";
+            leaf route-type {
+              type identityref {
+                base LOCATOR-ROUTE-TYPE;
+              }
+              description
+                "The type of the locator route";
+            }
+            leaf algorithm {
+              type uint8;
+              description
+                "Associated algorithm.";
+            }
+            leaf locator-length {
+              type uint8;
+              description
+                "Carries the length of the Locator
+                 prefix as number of bits (1-128)";
+            }
+            leaf-list flags {
+              type identityref {
+                base ospfv3-e-lsa:ospfv3-e-prefix-option;
+              }
+              description
+                "Flags for srv6 locator tlv.";
+            }
+            leaf metric {
+              type uint32;
+              description
+                "Metric value.";
+            }
+            leaf-list locator {
+              type inet:ipv6-address-no-zone;
+              description
+                "Advertised SRV6 locator.";
+            }
+            uses srv6-end-sids;
+          }
+          container unknown-tlv {
+            uses ospf:tlv;
+            description
+              "Unknow tlv.";
+          }
+        }
       }
-      leaf metric {
-        type uint32;
-        description
-          "Metric value.";
-      }
-      leaf-list locator {
-        type inet:ipv6-address-no-zone;
-        description
-          "Advertised SRV6 locator.";
-      }
-      uses srv6-end-sids;
     }
   }
 
@@ -890,6 +1000,40 @@ module ietf-ospfv3-srv6 {
   }
 
   /* Database */
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol/"
+        + "ospf:ospf/ospf:areas/ospf:area/"
+        + "ospf:interfaces/ospf:interface/ospf:database/"
+        + "ospf:link-scope-lsa-type/ospf:link-scope-lsas/"
+        + "ospf:link-scope-lsa/ospf:version/ospf:ospfv3/"
+        + "ospf:ospfv3/ospf:body" {
+    when "../../../../../../../../../../../rt:type = 'ospf:ospfv3'" {
+      description
+        "This augment OSPFv3 routing protocol when used";
+    }
+    description
+      "This augments OSPFv3 database with link scope SRv6 locator
+       lsas.";
+
+    uses srv6-locator-lsas;
+  }
+
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol/"
+           + "ospf:ospf/ospf:areas/ospf:area/ospf:database/"
+           + "ospf:area-scope-lsa-type/ospf:area-scope-lsas/"
+           + "ospf:area-scope-lsa/ospf:version/ospf:ospfv3/"
+           + "ospf:ospfv3/ospf:body" {
+    when "../../../../../../../../../rt:type = 'ospf:ospfv3'" {
+      description
+        "This augment OSPFv3 routing protocol when used";
+    }
+    description
+      "This augments OSPFv3 database with area scope SRv6 locator
+       lsas.";
+
+    uses srv6-locator-lsas;
+  }
 
   augment "/rt:routing/"
         + "rt:control-plane-protocols/rt:control-plane-protocol/"
@@ -902,12 +1046,28 @@ module ietf-ospfv3-srv6 {
         "This augment OSPFv3 routing protocol when used";
     }
     description
-      "This augments OSPFv3 protocol router capability.";
-    container srv6-locator {
+      "This augments OSPFv3 database with as scope SRv6 locator
+       lsas.";
+
+    uses srv6-locator-lsas;
+  }
+
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol/"
+        + "ospf:ospf/ospf:areas/"
+        + "ospf:area/ospf:database/"
+        + "ospf:area-scope-lsa-type/ospf:area-scope-lsas/"
+        + "ospf:area-scope-lsa/ospf:version/ospf:ospfv3/"
+        + "ospf:ospfv3/ospf:body/ospf:router-information" {
+    when "../../../../../../../../../../"
+       + "rt:type = 'ospf:ospfv3'" {
       description
-        "SRv6 Locator LSA.";
-      uses srv6-locactor-tlvs;
+        "This augmentation is only valid for OSPFv3.";
     }
+    description
+      "Area scope OSPFv3 Router Information LSA.";
+    uses srv6-capabilities;
+    uses srv6:srv6-msd-signaled;    
   }
 
   augment "/rt:routing/"
@@ -942,6 +1102,7 @@ module ietf-ospfv3-srv6 {
     description
       "This augments OSPFv3 protocol neighbor.";
     uses srv6-endx-sids;
+    uses srv6:srv6-msd-signaled;
   }
 
   /* Notifications */
@@ -974,6 +1135,9 @@ module ietf-ospfv3-srv6 {
         <li>micro-loop-avoidance</li>
         <li>srv6-ti-lfa</li>
       </ul>
+      <t>The ability to disable or enable OSPF Segment Routing support and/or change
+        Segment Routing configurations can result in a Denail-of-Service (DoS) attack,
+        as this may cause traffic to be dropped or misrouted.</t> 
       <t>There are a number of data nodes defined in the modules that are
       writable/creatable/deletable (i.e., config true, which is the default).
       These data nodes may be considered sensitive or vulnerable in some
@@ -987,6 +1151,8 @@ module ietf-ospfv3-srv6 {
         <li>srv6-msd</li>
         <li>srv6-endx-sid</li>
       </ul>
+      <t>Unauthorized access to any data node of these subtrees can disclose
+        the operational state information of OSPF protocol on this device.</t>
     </section>
     <section numbered="true" toc="default">
       <name>Contributors</name>

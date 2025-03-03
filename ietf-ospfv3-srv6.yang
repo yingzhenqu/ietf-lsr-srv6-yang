@@ -9,6 +9,11 @@ module ietf-ospfv3-srv6 {
     reference
       "RFC 6991: Common YANG Data Types";
   }
+  import ietf-routing-types {
+    prefix rt-types;
+    reference
+      "RFC 8294: Common YANG Data Types for the Routing Area";
+  }
   import ietf-routing {
     prefix rt;
     reference
@@ -46,26 +51,26 @@ module ietf-ospfv3-srv6 {
     "WG Web:   <https://datatracker.ietf.org/group/lsr/>
      WG List:  <mailto:lsr@ietf.org>
 
+     Author:    Yingzhen Qu
+                <mailto:yingzhen.ietf@gmail.com>
      Author:    Zhibo Hu
                 <mailto:huzhibo@huawei.com>
      Author:    Xuesong Geng
                 <mailto:gengxuesong@huawei.com>
      Author:    Kamran Raza
                 <mailto:skraza@cisco.com>
-     Author:    Yingzhen Qu
-                <mailto:yingzhen.ietf@gmail.com>
      Author:    Acee Lindem
                 <mailto:acee.ietf@gmail.com>
     ";
   description
     "The YANG module defines the configuration and operational state
      for OSPFv3 extensions to support Segment Routing over IPv6 data
-     plane.
+     plane as defined in RFC9513.
 
      This YANG model conforms to the Network Management
      Datastore Architecture (NDMA) as described in RFC 8342.
 
-     Copyright (c) 2024 IETF Trust and the persons identified as
+     Copyright (c) 2025 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
@@ -85,7 +90,7 @@ module ietf-ospfv3-srv6 {
      described in BCP 14 (RFC 2119) (RFC 8174) when, and only when,
      they appear in all capitals, as shown here.";
 
-  revision 2024-09-02 {
+  revision 2025-02-28 {
     description
       "Initial revision.";
     reference
@@ -455,48 +460,75 @@ module ietf-ospfv3-srv6 {
     }
   }
 
-  grouping srv6-locactor-tlvs {
+  grouping srv6-locator-lsas {
     description
-      "This group defines srv6 locator tlv.";
-    container srv6-locactor-tlv {
+      "Grouping for SRv6 locator lsas.";
+    container srv6-localtor-lsas {
       description
-        "This contains a SRv6 locator tlv.";
-      leaf route-type {
-        type identityref {
-          base LOCATOR-ROUTE-TYPE;
+        "SRv6 locator lsas.";
+      list srv6-locator-lsa {
+        description
+          "List of SRv6 locator lsa.";
+        leaf link-state-id {
+          type uint32;
+          description
+            "Link State ID.";
         }
-        description
-          "The type of the locator route";
-      }
-      leaf algorithm {
-        type uint8;
-        description
-          "Associated algorithm.";
-      }
-      leaf locator-length {
-        type uint8;
-        description
-          "Carries the length of the Locator
-           prefix as number of bits (1-128)";
-      }
-      leaf-list flags {
-        type identityref {
-          base ospfv3-e-lsa:ospfv3-e-prefix-option;
+        leaf adv-router {
+          type rt-types:router-id;
+          description
+            "Advertising router id.";
         }
-        description
-          "Flags for srv6 locator tlv.";
+        list sr6-locator-tlv {
+          description
+            "List of tlvs in SRv6 locator lsa.";
+          container srv6-locactor-tlvs {
+            description
+              "This contains a SRv6 locator tlv.";
+            leaf route-type {
+              type identityref {
+                base LOCATOR-ROUTE-TYPE;
+              }
+              description
+                "The type of the locator route";
+            }
+            leaf algorithm {
+              type uint8;
+              description
+                "Associated algorithm.";
+            }
+            leaf locator-length {
+              type uint8;
+              description
+                "Carries the length of the Locator
+                 prefix as number of bits (1-128)";
+            }
+            leaf-list flags {
+              type identityref {
+                base ospfv3-e-lsa:ospfv3-e-prefix-option;
+              }
+              description
+                "Flags for srv6 locator tlv.";
+            }
+            leaf metric {
+              type uint32;
+              description
+                "Metric value.";
+            }
+            leaf-list locator {
+              type inet:ipv6-address-no-zone;
+              description
+                "Advertised SRV6 locator.";
+            }
+            uses srv6-end-sids;
+          }
+          container unknown-tlv {
+            uses ospf:tlv;
+            description
+              "Unknow tlv.";
+          }
+        }
       }
-      leaf metric {
-        type uint32;
-        description
-          "Metric value.";
-      }
-      leaf-list locator {
-        type inet:ipv6-address-no-zone;
-        description
-          "Advertised SRV6 locator.";
-      }
-      uses srv6-end-sids;
     }
   }
 
@@ -591,6 +623,40 @@ module ietf-ospfv3-srv6 {
   }
 
   /* Database */
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol/"
+        + "ospf:ospf/ospf:areas/ospf:area/"
+        + "ospf:interfaces/ospf:interface/ospf:database/"
+        + "ospf:link-scope-lsa-type/ospf:link-scope-lsas/"
+        + "ospf:link-scope-lsa/ospf:version/ospf:ospfv3/"
+        + "ospf:ospfv3/ospf:body" {
+    when "../../../../../../../../../../../rt:type = 'ospf:ospfv3'" {
+      description
+        "This augment OSPFv3 routing protocol when used";
+    }
+    description
+      "This augments OSPFv3 database with link scope SRv6 locator
+       lsas.";
+
+    uses srv6-locator-lsas;
+  }
+
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol/"
+           + "ospf:ospf/ospf:areas/ospf:area/ospf:database/"
+           + "ospf:area-scope-lsa-type/ospf:area-scope-lsas/"
+           + "ospf:area-scope-lsa/ospf:version/ospf:ospfv3/"
+           + "ospf:ospfv3/ospf:body" {
+    when "../../../../../../../../../rt:type = 'ospf:ospfv3'" {
+      description
+        "This augment OSPFv3 routing protocol when used";
+    }
+    description
+      "This augments OSPFv3 database with area scope SRv6 locator
+       lsas.";
+
+    uses srv6-locator-lsas;
+  }
 
   augment "/rt:routing/"
         + "rt:control-plane-protocols/rt:control-plane-protocol/"
@@ -603,12 +669,28 @@ module ietf-ospfv3-srv6 {
         "This augment OSPFv3 routing protocol when used";
     }
     description
-      "This augments OSPFv3 protocol router capability.";
-    container srv6-locator {
+      "This augments OSPFv3 database with as scope SRv6 locator
+       lsas.";
+
+    uses srv6-locator-lsas;
+  }
+
+  augment "/rt:routing/"
+        + "rt:control-plane-protocols/rt:control-plane-protocol/"
+        + "ospf:ospf/ospf:areas/"
+        + "ospf:area/ospf:database/"
+        + "ospf:area-scope-lsa-type/ospf:area-scope-lsas/"
+        + "ospf:area-scope-lsa/ospf:version/ospf:ospfv3/"
+        + "ospf:ospfv3/ospf:body/ospf:router-information" {
+    when "../../../../../../../../../../"
+       + "rt:type = 'ospf:ospfv3'" {
       description
-        "SRv6 Locator LSA.";
-      uses srv6-locactor-tlvs;
+        "This augmentation is only valid for OSPFv3.";
     }
+    description
+      "Area scope OSPFv3 Router Information LSA.";
+    uses srv6-capabilities;
+    uses srv6:srv6-msd-signaled;    
   }
 
   augment "/rt:routing/"
@@ -643,6 +725,7 @@ module ietf-ospfv3-srv6 {
     description
       "This augments OSPFv3 protocol neighbor.";
     uses srv6-endx-sids;
+    uses srv6:srv6-msd-signaled;
   }
 
   /* Notifications */
